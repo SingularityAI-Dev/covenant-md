@@ -1,0 +1,39 @@
+{
+  "name": "covenant-framework",
+  "version": "1.0.0",
+  "description": "Framework implementing the COVENANT.md specification for AI agent skills",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "validate": "node src/cli.js validate",
+    "test": "node src/cli.js test",
+    "lint": "node src/cli.js lint",
+    "diff": "node src/cli.js diff",
+    "graph": "node src/cli.js graph",
+    "dev": "node src/cli.js dev",
+    "generate": "node src/cli.js generate",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": [
+    "covenant",
+    "ai",
+    "agent",
+    "skill",
+    "specification",
+    "contract"
+  ],
+  "author": "AI Engineer",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "handlebars": "^4.7.9",
+    "inquirer": "^13.4.2",
+    "jsonschema": "^1.4.1",
+    "marked": "^9.0.0",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "jest": "^29.5.0"
+  }
+}
