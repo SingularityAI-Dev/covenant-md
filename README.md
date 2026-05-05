@@ -48,7 +48,6 @@ npm run generate -- my-new-skill
 - `lint` - Lint the codebase (not yet implemented)
 - `diff` - Show differences between versions (not yet implemented)
 - `graph` - Generate dependency graph (not yet implemented)
-- `dev` - Start development mode (not yet implemented)
 
 ## Example Skills
 
