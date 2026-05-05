@@ -10,7 +10,6 @@
     "lint": "node src/cli.js lint",
     "diff": "node src/cli.js diff",
     "graph": "node src/cli.js graph",
-    "dev": "node src/cli.js dev",
     "generate": "node src/cli.js generate",
     "build": "echo 'Build complete'"
   },
