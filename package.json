@@ -6,12 +6,22 @@
   "type": "module",
   "scripts": {
     "validate": "node src/cli.js validate",
-    "test": "node src/cli.js test",
+    "test": "npm run test:framework",
+    "test:framework": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:fixtures": "node src/cli.js test examples/docx-generation/",
     "lint": "node src/cli.js lint",
     "diff": "node src/cli.js diff",
     "graph": "node src/cli.js graph",
     "generate": "node src/cli.js generate",
     "build": "echo 'Build complete'"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "testMatch": ["<rootDir>/tests/**/*.test.js"],
+    "collectCoverage": true,
+    "coverageReporters": ["text", "lcov"],
+    "collectCoverageFrom": ["src/**/*.js"]
   },
   "keywords": [
     "covenant",

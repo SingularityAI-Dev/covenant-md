@@ -31,9 +31,24 @@ npm install
 npm run validate -- examples/docx-generation/COVENANT.md
 ```
 
-### Run skill tests
+### Run framework unit tests
+
+Jest test suite covering validator, test runner, and generator behavior:
+
 ```bash
-npm run test -- examples/docx-generation/
+npm test
+# or, equivalently:
+npm run test:framework
+```
+
+### Run skill fixtures (legacy CLI runner)
+
+Execute the COVENANT.md fixtures of an example skill via the CLI's built-in (currently docx-hardcoded) runner:
+
+```bash
+npm run test:fixtures
+# or, against an arbitrary skill:
+node src/cli.js test path/to/skill/
 ```
 
 ### Generate a new skill
@@ -43,7 +58,7 @@ npm run generate -- my-new-skill
 
 ### Available Commands
 - `validate <filePath>` - Validate a COVENANT.md file
-- `test <skillPath>` - Run tests for a skill
+- `test <skillPath>` - Run COVENANT.md fixtures for a skill (legacy CLI runner; see `npm run test:fixtures`)
 - `generate <skillName>` - Generate a new skill blueprint
 - `lint` - Lint the codebase (not yet implemented)
 - `diff` - Show differences between versions (not yet implemented)
