@@ -4,12 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Layout
 
-This repo contains **two parallel implementations** of the COVENANT.md framework. Be careful which one you edit.
+All framework code lives in **`covenant-framework/`** — an ESM Node.js package (`"type": "module"`) implementing the COVENANT.md specification. There is no parallel implementation; the repo root used to host a CommonJS stub but it has been deleted.
 
-- **`covenant-framework/`** — the active, working implementation. ESM (`"type": "module"`), ~1500 lines, has dependencies installed, has examples, is the one referenced by handover docs. **Edit here by default.**
-- **`src/`** (repo root) — an older/stub CommonJS skeleton (~390 lines, mostly placeholders). The root `package.json` declares `bin: covenant -> ./src/index.js` but this is not the working CLI. Do not assume parity between the two trees.
-- **`docs/COVENANT.md`** — the canonical specification. Treat this as the source of truth when validator/test-runner behavior is ambiguous.
-- **`handover-docs/handover.md`** — a stale handover note describing prior session state. Useful for context, but verify against current code before relying on its claims.
+- **`covenant-framework/`** — the framework: validator, test runner, generator, CLI. Edit here.
+- **`docs/COVENANT.md`** — the canonical specification. Treat as the source of truth when validator or test-runner behavior is ambiguous.
+- **`handover-docs/handover.md`** — historical handover note. Useful for context, but verify against current code before relying on its claims.
 - **`test-skill/`** — a sample skill (COVENANT.md + SKILL.md) used as a fixture target.
 
 ## Working Commands
@@ -25,7 +24,7 @@ npm run test     -- examples/docx-generation/  # runs fixtures via simulated ski
 npm run generate -- my-new-skill               # interactive blueprint scaffold
 ```
 
-`lint`, `diff`, `graph`, `dev` are CLI placeholders that exit with "not yet implemented" — don't claim they work.
+`lint`, `diff`, `graph` are CLI placeholders that exit with "not yet implemented" — don't claim they work.
 
 There is **no test framework wired up** (jest is in devDependencies but unused; `tests/` is empty). "Tests" in this repo means COVENANT.md fixtures executed by `src/test.js`, not unit tests of the framework itself.
 
@@ -52,6 +51,6 @@ Two formats are supported and both must keep working:
 
 ## Conventions
 
-- ESM only inside `covenant-framework/` (`import`/`export`, `.js` extensions in import paths). The root `src/` is CommonJS; do not mix.
+- ESM only inside `covenant-framework/` (`import`/`export`, `.js` extensions in import paths).
 - `*.backup` files (`cli.js.backup`, `validator.js.backup`) are prior versions kept for reference — leave alone unless explicitly cleaning up.
 - `examples/my-new-skill/` is intentionally empty (it's the target dir for `npm run generate`).
