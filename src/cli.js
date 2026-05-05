@@ -236,12 +236,4 @@ program
     }
   });
 
-program
-  .command('dev')
-  .description('Start development mode for Covenant')
-  .action(() => {
-    console.log('Error: dev command not yet implemented');
-    process.exit(1);
-  });
-
 program.parse(process.argv);
