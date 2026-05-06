@@ -87,11 +87,25 @@ program
   });
 
 program
-  .command('graph')
-  .description('Generate dependency graph for Covenant')
-  .action(() => {
-    console.log('Error: graph command not yet implemented');
-    process.exit(1);
+  .command('graph <skillsDir>')
+  .description('Walk a skills directory and emit a dependency graph (DOT or JSON)')
+  .option('--format <fmt>', 'Output format: dot (default) or json', 'dot')
+  .action(async (skillsDir, opts) => {
+    try {
+      const { graphSkills } = await import('./graph.js');
+      const result = await graphSkills(skillsDir, opts);
+      if (result.error) {
+        process.stderr.write(`${result.error}\n`);
+      }
+      if (result.output) {
+        process.stdout.write(result.output);
+        if (!result.output.endsWith('\n')) process.stdout.write('\n');
+      }
+      process.exit(result.code);
+    } catch (err) {
+      console.error(`Error graphing: ${err.message}`);
+      process.exit(1);
+    }
   });
 
 program
