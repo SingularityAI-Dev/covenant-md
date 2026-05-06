@@ -55,11 +55,19 @@ program
   });
 
 program
-  .command('lint')
-  .description('Lint the Covenant codebase')
-  .action(() => {
-    console.log('Error: lint command not yet implemented');
-    process.exit(1);
+  .command('lint <skillPath>')
+  .description("Run heuristic design-quality checks on a skill's COVENANT.md")
+  .option('--strict', 'Exit non-zero if any warning fires')
+  .action(async (skillPath, opts) => {
+    try {
+      const { lintCovenant, printFindings } = await import('./lint.js');
+      const { code, findings } = await lintCovenant(skillPath, opts);
+      printFindings(findings);
+      process.exit(code);
+    } catch (err) {
+      console.error(`Error linting: ${err.message}`);
+      process.exit(1);
+    }
   });
 
 program
