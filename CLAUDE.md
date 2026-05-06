@@ -24,7 +24,7 @@ npm run test     -- examples/docx-generation/  # runs fixtures via simulated ski
 npm run generate -- my-new-skill               # interactive blueprint scaffold
 ```
 
-`lint`, `diff`, `graph` are CLI placeholders that exit with "not yet implemented" — don't claim they work.
+The CLI ships six commands: `validate`, `test`, `generate`, `lint`, `diff`, `graph`. `lint <skill-path>` runs heuristic design-quality checks (shallow-deep depth-vs-ops, missing-invariants on stable skills, undeclared-side-effects on write-verb operations); pass `--strict` to make warnings fail the exit code. `diff <old> <new>` semantically diffs two COVENANT.md files, classifying each change as breaking / additive / cosmetic against the new file's `interface.breaking_changes` declaration; `--strict` raises exit 1 when breaking changes appear without a major version bump. `graph <skills-dir>` walks a directory of skills and emits the dependency graph in DOT (default) or JSON (`--format json`); cycles exit 1 with the cycle path on stderr.
 
 Tests live in `tests/` (Jest, run via `npm test` under `node --experimental-vm-modules`) plus on-disk COVENANT.md fixtures executed by `src/test.js` (run via `npm run test:fixtures`). The Jest suite covers the framework modules; the fixture runner exercises example skills end-to-end through the CLI.
 
