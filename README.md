@@ -16,7 +16,7 @@ COVENANT.md is a design contract layer for AI agent skills that declares:
 - **Validation**: Check COVENANT.md files for specification compliance
 - **Testing**: Execute quality fixtures defined in skills
 - **Generation**: Create new skill blueprints from templates
-- **Examples**: Complete reference implementations for docx-generation and pdf-generation skills
+- **Examples**: Four reference skills covering docx-generation, pdf-generation, markdown-to-html, and template-rendering — including a real `dependencies.skills` edge for graph walks
 
 ## Installation
 
@@ -41,9 +41,9 @@ npm test
 npm run test:framework
 ```
 
-### Run skill fixtures (legacy CLI runner)
+### Run skill fixtures
 
-Execute the COVENANT.md fixtures of an example skill via the CLI's built-in (currently docx-hardcoded) runner:
+Execute the COVENANT.md fixtures of an example skill via the CLI's contract-driven generic runner (no per-skill code; the runner is steered entirely by `contracts.inputs` / `contracts.outputs` / `quality.fixtures`):
 
 ```bash
 npm run test:fixtures
@@ -56,20 +56,40 @@ node src/cli.js test path/to/skill/
 npm run generate -- my-new-skill
 ```
 
+### Lint a skill
+```bash
+node src/cli.js lint examples/pdf-generation/COVENANT.md
+node src/cli.js lint examples/pdf-generation/COVENANT.md --strict   # fail on warning
+```
+
+### Diff two COVENANT.md files
+```bash
+node src/cli.js diff examples/docx-generation/COVENANT.md examples/pdf-generation/COVENANT.md
+```
+
+### Graph a skills directory
+```bash
+node src/cli.js graph examples/                       # DOT to stdout
+node src/cli.js graph examples/ --format json         # JSON to stdout
+node src/cli.js graph examples/ | dot -Tpng -o graph.png   # render via graphviz
+```
+
 ### Available Commands
 - `validate <filePath>` - Validate a COVENANT.md file
-- `test <skillPath>` - Run COVENANT.md fixtures for a skill (legacy CLI runner; see `npm run test:fixtures`)
+- `test <skillPath>` - Run COVENANT.md fixtures for a skill via the generic contract-driven runner
 - `generate <skillName>` - Generate a new skill blueprint
-- `lint` - Lint the codebase (not yet implemented)
-- `diff` - Show differences between versions (not yet implemented)
-- `graph` - Generate dependency graph (not yet implemented)
+- `lint <skillPath>` - Run heuristic design-quality checks (shallow-deep, missing-invariants, undeclared-side-effects); use `--strict` to fail on warnings
+- `diff <oldPath> <newPath>` - Diff two COVENANT.md files; classify changes as breaking/additive/cosmetic
+- `graph <skillsDir>` - Walk a skills directory and emit a dependency graph (`--format dot` default, or `json`)
 
 ## Example Skills
 
-This framework includes two example skills that demonstrate COVENANT.md usage:
+This framework includes four example skills that demonstrate COVENANT.md usage:
 
 1. **docx-generation** - Create, read, and edit Microsoft Word documents
 2. **pdf-generation** - Generate PDF documents from structured content
+3. **markdown-to-html** - Convert markdown to HTML; demonstrates `dependencies.skills`
+4. **template-rendering** - Pure template-application skill; leaf node in the dependency graph
 
 Each example includes:
 - A complete COVENANT.md file following the specification
