@@ -71,11 +71,19 @@ program
   });
 
 program
-  .command('diff')
-  .description('Show differences between Covenant versions')
-  .action(() => {
-    console.log('Error: diff command not yet implemented');
-    process.exit(1);
+  .command('diff <oldPath> <newPath>')
+  .description('Diff two COVENANT.md files; classify changes as breaking/additive/cosmetic')
+  .option('--strict', 'Exit non-zero if breaking detected without major version bump')
+  .action(async (oldPath, newPath, opts) => {
+    try {
+      const { diffCovenants, printDiff } = await import('./diff.js');
+      const { code, sections } = await diffCovenants(oldPath, newPath, opts);
+      printDiff(sections);
+      process.exit(code);
+    } catch (err) {
+      console.error(`Error diffing: ${err.message}`);
+      process.exit(1);
+    }
   });
 
 program
