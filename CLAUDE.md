@@ -26,7 +26,7 @@ npm run generate -- my-new-skill               # interactive blueprint scaffold
 
 `lint`, `diff`, `graph` are CLI placeholders that exit with "not yet implemented" — don't claim they work.
 
-There is **no test framework wired up** (jest is in devDependencies but unused; `tests/` is empty). "Tests" in this repo means COVENANT.md fixtures executed by `src/test.js`, not unit tests of the framework itself.
+Tests live in `tests/` (Jest, run via `npm test` under `node --experimental-vm-modules`) plus on-disk COVENANT.md fixtures executed by `src/test.js` (run via `npm run test:fixtures`). The Jest suite covers the framework modules; the fixture runner exercises example skills end-to-end through the CLI.
 
 ## Architecture
 
@@ -41,7 +41,16 @@ Four modules in `covenant-framework/src/` form the pipeline:
 
 ### The skillRunner contract
 
-`test.js` does not execute skills itself — it delegates to a `skillRunner` function the caller supplies. `cli.js` currently hardcodes a **simulated** skillRunner that pretends to be `docx-generation` (in-memory `Map` of created documents, validates `.docx` extensions, returns mock `validation_result` objects). Real skill execution would replace this stub. When changing fixture semantics, update both `test.js` (the orchestrator) and the `cli.js` simulator together — they are coupled.
+`test.js` does not execute skills itself — it delegates to a `skillRunner(skillName, operation, input)` function the caller supplies. `cli.js` builds that function by calling `createSkillRunner({ covenantPath })` from `src/skill-runner.js`, which inspects the skill's COVENANT.md and returns one of two strategies:
+
+- **`simulator`** (default) — A contract-aware simulator. It validates inputs against `contracts.inputs` (required fields, types, nested schema), synthesizes outputs from each operation's `returns` list combined with `contracts.outputs[<field>].schema` defaults, and maintains a write/read path-map so roundtrip fixtures (write to `output_path`, then read from the same `input_path`) work generically across any skill.
+- **`process`** — Spawns an external runner script declared by the skill via a top-level `runner: { strategy: process, command: [...] }` block in COVENANT.md. The runner exchanges JSON `{operation, input}` / `{success, output, error}` over stdin/stdout. No example skill ships using this strategy yet.
+
+The runner has no hardcoded knowledge of any specific skill. To support a new skill, write its COVENANT.md — no framework changes required.
+
+#### Known fixture gap
+
+`examples/docx-generation/COVENANT.md` includes an `invalid-output-path` fixture that asserts the runner rejects `output_path` not ending in `.docx`. This constraint isn't expressible in COVENANT.md v1.0 (no `pattern` / `format` / `endsWith` field on string contracts), so the contract-driven simulator can't reproduce it. Result: docx-generation runs at 4/5 under `npm run test:fixtures` and `node src/cli.js test examples/docx-generation/`. The contract-driven runner is correct; the fixture is impl-specific. Future work (tracked as **SPEC-01** in `.planning/REQUIREMENTS.md`): extend the spec with pattern matching on string contracts (and update the fixture), or drop the impl-specific fixture from the example.
 
 ### Fixture format
 
