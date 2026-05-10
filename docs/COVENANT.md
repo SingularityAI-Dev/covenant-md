@@ -325,6 +325,30 @@ dependencies:
 
 ---
 
+### `runner` — How are operations executed?
+
+```yaml
+runner:
+  strategy: process               # simulator (default) | process
+  command: ["python3", "scripts/runner.py"]
+```
+
+`runner` declares the execution strategy a fixture runner uses to invoke this skill's surface operations. It is optional; when omitted, the default `simulator` strategy is assumed.
+
+**`runner.strategy: simulator`** (default) — the fixture runner uses a contract-aware simulator. It validates inputs against `contracts.inputs`, synthesises outputs from each operation's `returns` list combined with `contracts.outputs[<field>].schema` defaults, and maintains a write/read path-map so roundtrip fixtures work without a real implementation. This is the mode that lets fixtures be written and run before SKILL.md exists — the TDD path.
+
+**`runner.strategy: process`** — the fixture runner spawns an external script declared by `runner.command` and exchanges JSON over stdin and stdout. The protocol is:
+
+1. The runner sends one JSON object per invocation on stdin: `{ "operation": "<name>", "input": { ... } }`.
+2. The script writes one JSON object per invocation on stdout: `{ "success": true, "output": { ... } }` on success, or `{ "success": false, "error": "<message>" }` on failure.
+3. One request, one response. The script SHOULD exit cleanly when stdin closes.
+
+`runner.command` MUST be an array of strings — the executable followed by its arguments. Relative paths in `command` resolve against the directory containing COVENANT.md.
+
+The two strategies are not mutually exclusive in spirit: a skill MAY ship with `simulator` during early development to drive its fixtures, then switch to `process` once SKILL.md and the implementation exist. Switching strategy is not a breaking change unless `interface.breaking_changes` says it is.
+
+---
+
 ### `contracts` — What do you promise?
 
 ```yaml
