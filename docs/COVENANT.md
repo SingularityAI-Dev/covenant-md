@@ -269,7 +269,7 @@ interface:
     - removing a field from contracts.outputs
 ```
 
-**`interface.entry_point`** — the file the agent reads first when loading this skill. Almost always `SKILL.md`. Declared explicitly so validators and skill loaders know where to start.
+**`interface.entry_point`** — the file the agent reads first when loading this skill. Almost always `SKILL.md`, but declared explicitly so validators and skill loaders know where to start. The value MUST be a path relative to the directory containing COVENANT.md, and SHOULD point to a file that exists at validation time. Validators MAY warn when the referenced file is missing; they MUST NOT fail validation on its absence, since a covenant can legitimately be authored before SKILL.md (the TDD path).
 
 **`interface.surface`** — the *only* public operations this skill exposes. This is the most important section in the entire file. Everything not listed here is implementation — private, subject to change, not callable directly by consumers.
 
