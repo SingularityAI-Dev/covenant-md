@@ -187,11 +187,11 @@ stability: stable                 # stable | experimental | deprecated
 
 **`covenant_version`**: declares which version of the COVENANT.md spec this file is written against. Validators use this to apply the correct schema. Currently `"1.0"`.
 
-**`name`**: the canonical identifier for this skill. Must be kebab-case, globally unique within a skill library. Used by dependency declarations in other COVENANT.md files.
+**`name`**: the canonical identifier for this skill. It MUST be kebab-case and globally unique within a skill library. Used by dependency declarations in other COVENANT.md files.
 
 **`version`**: the skill's own version, following semantic versioning. A breaking change (removing an interface operation, changing a contract field type) requires a major version bump. The `interface.breaking_changes` field declares what constitutes a breaking change for this specific skill.
 
-**`stability`**: `stable` skills have a committed interface. `experimental` skills may change without a major version bump. `deprecated` skills are maintained for compatibility but should not be depended upon for new work.
+**`stability`**: `stable` skills have a committed interface. `experimental` skills may change without a major version bump. `deprecated` skills are maintained for compatibility but SHOULD NOT be depended upon for new work.
 
 ---
 
@@ -318,12 +318,12 @@ interface:
 **`interface.surface`**: the *only* public operations this skill exposes. This is the most important section in the entire file. Everything not listed here is implementation: private, subject to change, not callable directly by consumers.
 
 Each operation declares:
-- `name`: the verb. Operations should be named with clear action verbs.
+- `name`: the verb. Operations SHOULD be named with clear action verbs.
 - `description`: what the operation does in one to two sentences.
 - `accepts`: which contract input fields this operation uses. References field names from `contracts.inputs`.
 - `returns`: which contract output fields this operation produces. References field names from `contracts.outputs`.
 
-A skill with a well-designed interface keeps the surface small. Fewer than two operations is a sign the skill may be too narrow to justify its own folder. The upper bound is governed by `domain.depth`: a `deep` skill should stay at three or fewer operations (see §domain.depth); a `shallow` skill has no fixed ceiling but is itself a candidate for refactoring.
+A skill with a well-designed interface keeps the surface small. Fewer than two operations is a sign the skill may be too narrow to justify its own folder. The upper bound is governed by `domain.depth`: a `deep` skill SHOULD stay at three or fewer operations (see §domain.depth); a `shallow` skill has no fixed ceiling but is itself a candidate for refactoring.
 
 **`interface.breaking_changes`**: an explicit declaration of what constitutes a semver-breaking change for this skill. Validators and CI tools use this list to determine whether a change to the skill requires a major version bump. Consumers use it to understand their upgrade risk.
 
@@ -359,11 +359,11 @@ dependencies:
         path specified in output_path if not set.
 ```
 
-**`dependencies.skills`**: other skills this skill depends on. Each entry must reference the depended-upon skill's `name` as declared in its own COVENANT.md. The optional `covenant` field provides a path or URL to that skill's COVENANT.md for validation. When present, a validator can resolve the dependency graph and detect cycles before runtime.
+**`dependencies.skills`**: other skills this skill depends on. Each entry MUST reference the depended-upon skill's `name` as declared in its own COVENANT.md. The optional `covenant` field provides a path or URL to that skill's COVENANT.md for validation. When present, a validator can resolve the dependency graph and detect cycles before runtime.
 
 **`dependencies.mcp_servers`**: MCP servers this skill requires connectivity to. Mark `required: false` for optional integrations and always provide a `fallback` description: what happens when the server is unavailable. A skill that fails silently when an optional dependency is absent has violated its covenant.
 
-**`dependencies.packages`**: specific versioned packages from a named ecosystem. Validators can check these against the agent's runtime environment before the skill is invoked. `ecosystem` accepts `npm`, `pip`, `gem`, `cargo`, or `go`.
+**`dependencies.packages`**: specific versioned packages from a named ecosystem. Validators MAY check these against the agent's runtime environment before the skill is invoked. `ecosystem` accepts `npm`, `pip`, `gem`, `cargo`, or `go`.
 
 **`dependencies.environment`**: environment variables or runtime constraints. Required variables must be present for the skill to function. Optional variables must declare their fallback behaviour explicitly.
 
@@ -464,7 +464,7 @@ contracts:
 **`contracts.inputs`**: every field that can be passed into any surface operation. Each field declares:
 - `type`: one of `string`, `number`, `boolean`, `object`, `array`, or a union type `"string | null"`.
 - `required`: whether the consumer must always provide this field.
-- `description`: what this field means in the domain's ubiquitous language. References to terms defined in `domain.ubiquitous_language` are expected here.
+- `description`: what this field means in the domain's ubiquitous language. References to terms defined in `domain.ubiquitous_language` SHOULD appear here.
 - `schema`: optional nested schema for `object` and `array` types.
 
 **`contracts.outputs`**: every field that any surface operation can return. Same structure as inputs. The union of outputs across all operations is declared here; individual operations declare which subset they return via `interface.surface[n].returns`.
@@ -571,7 +571,7 @@ Each fixture declares:
 - `id`: unique identifier, kebab-case. Referenced by `depends_on` in other fixtures.
 - `description`: what this fixture proves, not just what it does.
 - `operation`: which surface operation this fixture exercises.
-- `input`: the exact input to pass. Must satisfy the declared contracts.
+- `input`: the exact input to pass. It MUST satisfy the declared contracts.
 - `expect`: the expected output. Partial matching: only declared fields are checked.
 - `expect_failure`: set `true` for fixtures that prove graceful failure handling. A skill that throws an unhandled exception on bad input has violated its covenant.
 - `expect_failure_reason`: a string that should appear in the failure message. Prevents accepting the wrong kind of failure.
@@ -609,25 +609,25 @@ The `covenant_version` field declares which version of this specification a file
 
 The preceding subsections describe the format. This subsection lists what a conformant validator MUST check. Any tool that calls itself a COVENANT.md validator MUST enforce every rule below; tools MAY enforce additional checks beyond these.
 
-**Required fields:** `covenant_version` and `name` must be present and non-empty.
+**Required fields:** `covenant_version` and `name` MUST be present and non-empty.
 
-**Name format:** `name` must be kebab-case (`[a-z0-9-]+`). No spaces, no underscores, no uppercase.
+**Name format:** `name` MUST be kebab-case (`[a-z0-9-]+`). No spaces, no underscores, no uppercase.
 
-**Version format:** If `version` is present, it must be valid semver.
+**Version format:** If `version` is present, it MUST be valid semver.
 
-**Stability values:** `stability` must be one of `stable`, `experimental`, or `deprecated`.
+**Stability values:** `stability` MUST be one of `stable`, `experimental`, or `deprecated`.
 
-**Interface surface operations:** Every `accepts` field reference must correspond to a key in `contracts.inputs`. Every `returns` field reference must correspond to a key in `contracts.outputs`. Forward references are not permitted.
+**Interface surface operations:** Every `accepts` field reference MUST correspond to a key in `contracts.inputs`. Every `returns` field reference MUST correspond to a key in `contracts.outputs`. Forward references MUST NOT appear.
 
-**Fixture operations:** Every `fixture.operation` must correspond to a `name` in `interface.surface`.
+**Fixture operations:** Every `fixture.operation` MUST correspond to a `name` in `interface.surface`.
 
-**Fixture input conformance:** Every `fixture.input` field must be a key declared in `contracts.inputs`. Fixtures may not pass undeclared fields.
+**Fixture input conformance:** Every `fixture.input` field MUST be a key declared in `contracts.inputs`. Fixtures MUST NOT pass undeclared fields.
 
-**Dependency cycle detection:** When `dependencies.skills` entries include `covenant` paths, validators must resolve the dependency graph and reject circular dependencies.
+**Dependency cycle detection:** When `dependencies.skills` entries include `covenant` paths, validators MUST resolve the dependency graph and reject circular dependencies.
 
 **Depth declaration:** Validators SHOULD warn when `domain.depth: deep` and `interface.surface` has more than three operations (see §domain.depth). Validators MUST NOT fail on this rule; it is a heuristic.
 
-**Invariant syntax:** `contracts.invariants` entries are natural language. They are not validated for syntax. They are validated for presence: at least one invariant is expected for any skill with `stability: stable`.
+**Invariant syntax:** `contracts.invariants` entries are natural language. They are not validated for syntax. They are validated for presence: at least one invariant SHOULD appear for any skill with `stability: stable`.
 
 ---
 
