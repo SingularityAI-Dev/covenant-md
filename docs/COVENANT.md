@@ -563,6 +563,32 @@ The `covenant_version` field declares which version of this specification a file
 
 ---
 
+### Conformance rules
+
+The preceding subsections describe the format. This subsection lists what a conformant validator MUST check. Any tool that calls itself a COVENANT.md validator MUST enforce every rule below; tools MAY enforce additional checks beyond these.
+
+**Required fields:** `covenant_version` and `name` must be present and non-empty.
+
+**Name format:** `name` must be kebab-case (`[a-z0-9-]+`). No spaces, no underscores, no uppercase.
+
+**Version format:** If `version` is present, it must be valid semver.
+
+**Stability values:** `stability` must be one of `stable`, `experimental`, or `deprecated`.
+
+**Interface surface operations:** Every `accepts` field reference must correspond to a key in `contracts.inputs`. Every `returns` field reference must correspond to a key in `contracts.outputs`. Forward references are not permitted.
+
+**Fixture operations:** Every `fixture.operation` must correspond to a `name` in `interface.surface`.
+
+**Fixture input conformance:** Every `fixture.input` field must be a key declared in `contracts.inputs`. Fixtures may not pass undeclared fields.
+
+**Dependency cycle detection:** When `dependencies.skills` entries include `covenant` paths, validators must resolve the dependency graph and reject circular dependencies.
+
+**Depth declaration:** Validators SHOULD warn when `domain.depth: deep` and `interface.surface` has more than three operations (see §domain.depth). Validators MUST NOT fail on this rule — it is a heuristic.
+
+**Invariant syntax:** `contracts.invariants` entries are natural language. They are not validated for syntax. They are validated for presence — at least one invariant is expected for any skill with `stability: stable`.
+
+---
+
 ## Complete Worked Example
 
 The following is a complete, valid COVENANT.md for a hypothetical `pdf-generation` skill. The markdown body below the frontmatter is mandatory — it is where the author explains the design decisions that the YAML cannot express.
@@ -738,32 +764,6 @@ The relationship is not hierarchical. They are peers with different audiences:
 ### COVENANT.md + CLAUDE.md / AGENTS.md
 
 CLAUDE.md and AGENTS.md establish identity and project context at the agent level. COVENANT.md establishes design contract at the skill level. There is no overlap. An agent with a CLAUDE.md that says "prefer deep modules" should find that preference reflected in every skill's `domain.depth` declaration.
-
----
-
-## Validation Rules
-
-A conformant COVENANT.md validator must enforce the following:
-
-**Required fields:** `covenant_version` and `name` must be present and non-empty.
-
-**Name format:** `name` must be kebab-case (`[a-z0-9-]+`). No spaces, no underscores, no uppercase.
-
-**Version format:** If `version` is present, it must be valid semver.
-
-**Stability values:** `stability` must be one of `stable`, `experimental`, or `deprecated`.
-
-**Interface surface operations:** Every `accepts` field reference must correspond to a key in `contracts.inputs`. Every `returns` field reference must correspond to a key in `contracts.outputs`. Forward references are not permitted.
-
-**Fixture operations:** Every `fixture.operation` must correspond to a `name` in `interface.surface`.
-
-**Fixture input conformance:** Every `fixture.input` field must be a key declared in `contracts.inputs`. Fixtures may not pass undeclared fields.
-
-**Dependency cycle detection:** When `dependencies.skills` entries include `covenant` paths, validators must resolve the dependency graph and reject circular dependencies.
-
-**Depth declaration:** Validators SHOULD warn when `domain.depth: deep` and `interface.surface` has more than three operations (see §domain.depth). Validators MUST NOT fail on this rule — it is a heuristic.
-
-**Invariant syntax:** `contracts.invariants` entries are natural language. They are not validated for syntax. They are validated for presence — at least one invariant is expected for any skill with `stability: stable`.
 
 ---
 
