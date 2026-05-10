@@ -49,6 +49,25 @@ Not every skill needs a covenant; see [When to Use It — and When Not To](#when
 
 ---
 
+## When to Use It — and When Not To
+
+**Use COVENANT.md when:**
+- The skill will be depended upon by other skills, LOGIC.md steps, or enterprise workflows.
+- The skill is in a shared library and will be used by agents you do not control.
+- The skill is complex enough that its interface needs protecting from implementation churn.
+- You are practising TDD — write the fixtures before writing SKILL.md.
+- The skill has stability: `stable` declared and therefore carries a breaking-change commitment.
+
+**You probably do not need COVENANT.md when:**
+- The skill is a personal one-shot automation with a single consumer you control entirely.
+- You are prototyping and the interface is not yet stable.
+- The skill is a thin wrapper around a single script with no composability requirements.
+- The skill is marked `experimental` and its users accept that the interface may change.
+
+The test: *does something outside this skill folder depend on how this skill behaves?* If yes, COVENANT.md.
+
+---
+
 ## The Two-Party Model
 
 A covenant, by definition, is a binding agreement between two parties with mutual obligations. In COVENANT.md, those parties are **the skill** and **the consumer** — an agent, a LOGIC.md step, or another skill.
@@ -84,10 +103,44 @@ This mutual obligation is what has been missing. Skills today are informal relat
 └─────────────────────────────────────────────────────────┘
 ```
 
-LOGIC.md operates at the *task* level — how a multi-step reasoning pipeline is structured.
-COVENANT.md operates at the *skill* level — how a single skill is designed.
+LOGIC.md operates at the *task* level — how a multi-step reasoning pipeline is structured. COVENANT.md operates at the *skill* level — how a single skill is designed. They are complementary, not competing: a LOGIC.md step that invokes a skill can assert against that skill's declared contracts rather than guessing at its behaviour. The subsections below describe each peer relationship in turn.
 
-They are complementary, not competing. A LOGIC.md step that invokes a skill can assert against that skill's declared contracts rather than guessing at its behaviour. COVENANT.md is the thing LOGIC.md is waiting for.
+### COVENANT.md + LOGIC.md
+
+A LOGIC.md step that invokes a skill can declare its contract assertions directly against the skill's COVENANT.md:
+
+```yaml
+# In a LOGIC.md step
+steps:
+  - name: generate_report
+    skill: pdf-generation
+    covenant: ./skills/pdf-generation/COVENANT.md
+    inputs:
+      content: "{{ outputs.compiled_content }}"
+      output_path: "/reports/{{ run_id }}.pdf"
+    contracts:
+      outputs:
+        render_result:
+          page_count: "> 0"
+    quality_gates:
+      post_output:
+        - check: "outputs.render_result.file_path !== null"
+          action: retry
+```
+
+When a LOGIC.md step references a COVENANT.md, the runtime can validate inputs against the skill's declared contracts before invocation, rather than discovering type mismatches at runtime. This is the LOGIC.md integration that makes the two specs composable.
+
+### COVENANT.md + SKILL.md
+
+SKILL.md remains the procedural document — the instructions the agent reads to understand *how* to operate the skill. COVENANT.md is the design document — the contract the author made with every future consumer.
+
+The relationship is not hierarchical. They are peers with different audiences:
+- **SKILL.md** is written for the agent that will *use* the skill.
+- **COVENANT.md** is written for the agent (or human) that will *depend on* the skill.
+
+### COVENANT.md + CLAUDE.md / AGENTS.md
+
+CLAUDE.md and AGENTS.md establish identity and project context at the agent level. COVENANT.md establishes design contract at the skill level. There is no overlap. An agent with a CLAUDE.md that says "prefer deep modules" should find that preference reflected in every skill's `domain.depth` declaration.
 
 ---
 
@@ -712,66 +765,6 @@ Early versions of this skill exposed separate `create`, `preview`, and `export` 
 
 Styling is a rendering concern, not a content concern. Allowing the caller to pass styling overrides via `content` would couple the caller to the renderer's internal model and make the interface effectively an undeclared dependency on implementation details. Styling overrides belong in `options`.
 ```
-
----
-
-## Relationship to the Ecosystem
-
-### COVENANT.md + LOGIC.md
-
-A LOGIC.md step that invokes a skill can declare its contract assertions directly against the skill's COVENANT.md:
-
-```yaml
-# In a LOGIC.md step
-steps:
-  - name: generate_report
-    skill: pdf-generation
-    covenant: ./skills/pdf-generation/COVENANT.md
-    inputs:
-      content: "{{ outputs.compiled_content }}"
-      output_path: "/reports/{{ run_id }}.pdf"
-    contracts:
-      outputs:
-        render_result:
-          page_count: "> 0"
-    quality_gates:
-      post_output:
-        - check: "outputs.render_result.file_path !== null"
-          action: retry
-```
-
-When a LOGIC.md step references a COVENANT.md, the runtime can validate inputs against the skill's declared contracts before invocation, rather than discovering type mismatches at runtime. This is the LOGIC.md integration that makes the two specs composable.
-
-### COVENANT.md + SKILL.md
-
-SKILL.md remains the procedural document — the instructions the agent reads to understand *how* to operate the skill. COVENANT.md is the design document — the contract the author made with every future consumer.
-
-The relationship is not hierarchical. They are peers with different audiences:
-- **SKILL.md** is written for the agent that will *use* the skill.
-- **COVENANT.md** is written for the agent (or human) that will *depend on* the skill.
-
-### COVENANT.md + CLAUDE.md / AGENTS.md
-
-CLAUDE.md and AGENTS.md establish identity and project context at the agent level. COVENANT.md establishes design contract at the skill level. There is no overlap. An agent with a CLAUDE.md that says "prefer deep modules" should find that preference reflected in every skill's `domain.depth` declaration.
-
----
-
-## When to Use It — and When Not To
-
-**Use COVENANT.md when:**
-- The skill will be depended upon by other skills, LOGIC.md steps, or enterprise workflows.
-- The skill is in a shared library and will be used by agents you do not control.
-- The skill is complex enough that its interface needs protecting from implementation churn.
-- You are practising TDD — write the fixtures before writing SKILL.md.
-- The skill has stability: `stable` declared and therefore carries a breaking-change commitment.
-
-**You probably do not need COVENANT.md when:**
-- The skill is a personal one-shot automation with a single consumer you control entirely.
-- You are prototyping and the interface is not yet stable.
-- The skill is a thin wrapper around a single script with no composability requirements.
-- The skill is marked `experimental` and its users accept that the interface may change.
-
-The test: *does something outside this skill folder depend on how this skill behaves?* If yes, COVENANT.md.
 
 ---
 
