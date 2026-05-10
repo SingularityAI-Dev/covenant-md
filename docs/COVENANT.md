@@ -45,6 +45,8 @@ The YAML contains the machine-parseable contract. The markdown body below the fr
 
 Two fields are required: `covenant_version` and `name`. Everything else is optional but purposeful — each section answers one of five questions a well-designed skill must be able to answer.
 
+Not every skill needs a covenant; see [When to Use It — and When Not To](#when-to-use-it--and-when-not-to) for the cases where the format helps and the cases where it doesn't.
+
 ---
 
 ## The Two-Party Model
