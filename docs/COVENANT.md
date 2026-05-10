@@ -153,6 +153,45 @@ stability: stable                 # stable | experimental | deprecated
 
 ---
 
+### Minimum viable covenant
+
+The smallest valid COVENANT.md declares only the two required fields. Everything below is optional but purposeful. A working skeleton with a single operation and a single fixture looks like this:
+
+```yaml
+---
+covenant_version: "1.0"
+name: hello-world
+
+interface:
+  surface:
+    - name: greet
+      accepts: [recipient]
+      returns: [message]
+
+contracts:
+  inputs:
+    recipient:
+      type: string
+      required: true
+  outputs:
+    message:
+      type: string
+
+quality:
+  fixtures:
+    - id: greets-by-name
+      operation: greet
+      input:
+        recipient: "world"
+      expect:
+        message: "Hello, world"
+---
+```
+
+This is a complete, validator-conformant covenant. Each subsection below explains what to add — and why — once the skill outgrows the skeleton.
+
+---
+
 ### `domain` — Who are you?
 
 ```yaml
