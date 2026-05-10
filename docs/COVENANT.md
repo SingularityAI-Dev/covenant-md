@@ -221,6 +221,8 @@ domain:
 
 **`domain.depth`** — borrowed directly from John Ousterhout's *A Philosophy of Software Design*. Declare `deep` if this skill hides significant complexity behind a minimal interface. Declare `shallow` if the interface closely mirrors the implementation. Validators can flag shallow skills as candidates for refactoring. The declaration itself creates accountability — the author must honestly evaluate their own design.
 
+The depth declaration carries one quantitative heuristic: a `deep` skill SHOULD expose three or fewer operations in `interface.surface`. A `deep` skill with six operations is almost certainly shallow. Validators SHOULD warn when this heuristic is exceeded; they MUST NOT fail, since the heuristic is advisory and edge cases exist.
+
 **`domain.ubiquitous_language`** — a curated glossary of terms specific to this skill's domain, derived from Domain-Driven Design's *ubiquitous language* concept. These terms must appear consistently in the skill's instructions, scripts, variable names, and in every conversation the agent has about this skill. Language divergence is a design smell. Two sub-options:
 
 - `inline` — define terms directly in the YAML. Best for skills with fewer than ten domain terms.
@@ -279,7 +281,7 @@ Each operation declares:
 - `accepts` — which contract input fields this operation uses. References field names from `contracts.inputs`.
 - `returns` — which contract output fields this operation produces. References field names from `contracts.outputs`.
 
-A skill with a well-designed interface has three to five operations maximum. More than five is a sign the skill is doing too much. Fewer than two is a sign the skill may be too narrow to justify its own folder.
+A skill with a well-designed interface keeps the surface small. Fewer than two operations is a sign the skill may be too narrow to justify its own folder. The upper bound is governed by `domain.depth`: a `deep` skill should stay at three or fewer operations (see §domain.depth); a `shallow` skill has no fixed ceiling but is itself a candidate for refactoring.
 
 **`interface.breaking_changes`** — an explicit declaration of what constitutes a semver-breaking change for this skill. Validators and CI tools use this list to determine whether a change to the skill requires a major version bump. Consumers use it to understand their upgrade risk.
 
@@ -759,7 +761,7 @@ A conformant COVENANT.md validator must enforce the following:
 
 **Dependency cycle detection:** When `dependencies.skills` entries include `covenant` paths, validators must resolve the dependency graph and reject circular dependencies.
 
-**Depth declaration:** If `domain.depth` is declared as `deep`, the interface surface must have three operations or fewer. A `deep` skill with six operations is almost certainly shallow. Validators should warn, not error, on this rule — it is a heuristic, not a hard constraint.
+**Depth declaration:** Validators SHOULD warn when `domain.depth: deep` and `interface.surface` has more than three operations (see §domain.depth). Validators MUST NOT fail on this rule — it is a heuristic.
 
 **Invariant syntax:** `contracts.invariants` entries are natural language. They are not validated for syntax. They are validated for presence — at least one invariant is expected for any skill with `stability: stable`.
 
