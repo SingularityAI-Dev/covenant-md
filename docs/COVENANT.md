@@ -49,22 +49,9 @@ Two fields are required: `covenant_version` and `name`. Everything else is optio
 
 ## The Two-Party Model
 
-A covenant, by definition, is a binding agreement between two parties with mutual obligations.
+A covenant, by definition, is a binding agreement between two parties with mutual obligations. In COVENANT.md, those parties are **the skill** and **the consumer** — an agent, a LOGIC.md step, or another skill.
 
-In COVENANT.md, those parties are:
-
-**The Skill** covenants to:
-- Deliver the declared outputs when given the declared inputs
-- Expose only the operations listed in `interface.surface` — nothing more
-- Honour its declared dependencies before claiming to be usable
-- Pass its own quality fixtures before being considered ready
-- Declare any side effects explicitly — no surprises
-
-**The Consumer** (agent, LOGIC.md step, or another skill) covenants to:
-- Call only operations listed in `interface.surface`
-- Provide all `required: true` inputs before invoking
-- Not depend on any implementation detail not exposed through the interface
-- Treat the skill as a grey box once the contract is established
+The skill commits to honour what it has declared: deliver the declared outputs given the declared inputs, expose only the operations in `interface.surface`, depend only on what `dependencies` lists, and disclose every observable side effect. The consumer commits to call only declared operations, supply every `required: true` input, and treat anything outside the interface as private. The fields in the rest of this spec are how those commitments are written down; this section is the framing that explains why those particular fields exist.
 
 This mutual obligation is what has been missing. Skills today are informal relationships. COVENANT.md makes them formal.
 
