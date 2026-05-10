@@ -114,6 +114,26 @@ This document uses normative keywords in the RFC 2119 sense. When **MUST**, **MU
 
 Lowercase forms ("must", "should", "may") carry ordinary English meaning and impose no conformance obligation. The rest of this section uses both registers, so context — and the casing — disambiguates.
 
+### File structure
+
+A COVENANT.md file is a markdown document with a YAML frontmatter block. The frontmatter MUST be enclosed by `---` delimiters at the start of the file:
+
+```
+---
+covenant_version: "1.0"
+name: my-skill
+# ... rest of YAML ...
+---
+
+<markdown body here>
+```
+
+Validators MUST extract the YAML between the leading `---` and the next `---` line and parse it against this specification. Anything before the opening `---` is a conformance error.
+
+The markdown body below the frontmatter is **freeform**. Validators MUST NOT impose required headings, sections, or content on the body. The body is for the human reader — design rationale, worked examples, anything that helps a future maintainer or consumer reason about the skill.
+
+**Legacy fixture blocks.** Earlier drafts of this spec stored fixtures as fenced code blocks tagged ` ```covenant-fixture ` inside the markdown body, with one JSON object per block. Conformant validators SHOULD continue to accept these blocks for backward compatibility, merging them into the fixture set alongside `quality.fixtures`. New skills SHOULD prefer the modern `quality.fixtures` field in the YAML; the legacy form is supported but no longer recommended.
+
 ### Root fields
 
 ```yaml
