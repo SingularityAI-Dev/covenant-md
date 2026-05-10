@@ -520,6 +520,23 @@ The minimum viable fixture set for any skill with a `create`-style operation:
 
 ---
 
+### Versioning and forward compatibility
+
+The `covenant_version` field declares which version of this specification a file conforms to. The spec itself is versioned — covenants written today will outlive the version of the validator that first read them, so the rules for handling unknown versions matter as much as the rules for the current one.
+
+**Spec versioning.** This document is `covenant_version: "1.0"`. Future versions follow semantic versioning at the spec level:
+- A **minor** bump (`1.0` → `1.1`) MAY add new optional fields under existing sections, or introduce new optional top-level sections. It MUST NOT change the meaning of existing fields or remove anything required.
+- A **major** bump (`1.0` → `2.0`) MAY remove fields, change types, or restructure sections. Covenants written against an earlier major version are not guaranteed to validate.
+
+**Validator behaviour.** Conformant validators MUST take one of three actions when reading a `covenant_version`:
+1. **Recognised major, recognised or older minor** — validate against the validator's own ruleset. SHOULD warn if the file's minor version is newer than the validator's, since the file may use fields the validator does not know about.
+2. **Recognised major, newer minor** — validate against the validator's ruleset; ignore unknown fields under known sections (they are forward-compatible additions). SHOULD warn that the validator is older than the file.
+3. **Unrecognised major version, or anything else** — MUST reject the file with a clear error. Validating an unknown major against an old ruleset produces silent false negatives.
+
+**Unknown fields.** Within a recognised major version, validators MUST ignore unknown fields under known top-level sections rather than rejecting them, so a v1.1 covenant remains readable to a v1.0 validator. This is the mechanism that makes forward compatibility possible.
+
+---
+
 ## Complete Worked Example
 
 The following is a complete, valid COVENANT.md for a hypothetical `pdf-generation` skill. The markdown body below the frontmatter is mandatory — it is where the author explains the design decisions that the YAML cannot express.
