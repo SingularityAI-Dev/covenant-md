@@ -104,6 +104,16 @@ They are complementary, not competing. A LOGIC.md step that invokes a skill can 
 
 ## Specification
 
+### Conformance terms
+
+This document uses normative keywords in the RFC 2119 sense. When **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** appear in capitals, they carry their normative meaning:
+
+- **MUST** / **MUST NOT** — an absolute requirement. Implementations that violate a MUST clause are not conformant.
+- **SHOULD** / **SHOULD NOT** — a strong recommendation. Implementations may deviate, but only with a documented reason; conformance tools SHOULD warn rather than fail.
+- **MAY** — a permitted option. Conformant implementations may choose either path; consumers MUST NOT depend on which is chosen.
+
+Lowercase forms ("must", "should", "may") carry ordinary English meaning and impose no conformance obligation. The rest of this section uses both registers, so context — and the casing — disambiguates.
+
 ### Root fields
 
 ```yaml
