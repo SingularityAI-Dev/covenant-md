@@ -1,8 +1,20 @@
 # Roadmap
 
-> Last updated: 2026-05-06
+> Last updated: 2026-05-10
 >
 > v1.0 MVP shipped. Detailed milestone plans live in `.planning/`. This file is the public-facing summary.
+
+## Shipped (v1.0)
+
+CLI commands implemented in `covenant-framework/`:
+
+- [x] `covenant validate` — conformance check against the spec
+- [x] `covenant test` — runs quality fixtures, reports pass/fail
+- [x] `covenant generate` — interactive blueprint scaffold
+- [x] `covenant lint` — heuristic checks (shallow depth, missing invariants, undeclared side effects)
+- [x] `covenant diff` — semantic diff highlighting breaking changes
+- [x] `covenant graph` — emits the dependency graph of a skill library
+- [x] Dependency cycle detection in the validator and `graph` command
 
 ## Now (Active)
 
@@ -20,3 +32,6 @@
 - [ ] **PORT-01** — Python port of validator (read-only conformance against same fixtures)
 - [ ] Skill marketplace / registry (separate product)
 - [ ] Full LOGIC.md runtime integration (separate repo)
+- [ ] Changelog generation from `covenant diff` output
+- [ ] Deprecation warnings propagated to consumers via `stability: deprecated`
+- [ ] Shared domain-language merging across skills in a library

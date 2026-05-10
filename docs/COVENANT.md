@@ -684,33 +684,4 @@ The test: *does something outside this skill folder depend on how this skill beh
 
 ---
 
-## Roadmap
-
-**Validator (`@covenant/cli`)**
-- `covenant validate ./my-skill` — checks conformance against this spec.
-- `covenant test ./my-skill` — runs quality fixtures, reports pass/fail.
-- `covenant lint ./my-skill` — heuristic checks (shallow depth, missing invariants, undeclared side effects).
-- `covenant diff v1/COVENANT.md v2/COVENANT.md` — semantic diff highlighting breaking changes.
-- `covenant graph ./skills/` — outputs the full dependency graph of a skill library.
-
-**LOGIC.md integration**
-- Runtime contract resolution: when a LOGIC.md step references a `covenant` field, the runtime validates inputs and asserts outputs automatically.
-- Skill dependency injection: a LOGIC.md workflow declares which skill versions it requires; the runtime resolves and loads them.
-
-**Versioning**
-- Explicit breaking-change detection using `interface.breaking_changes` declarations.
-- Changelog generation from covenant diffs.
-- Deprecation warnings propagated to consumers via `stability: deprecated`.
-
-**Skill dependency graph**
-- Cross-skill cycle detection at library load time.
-- Topological sort of skill dependencies for ordered initialisation.
-- Shared domain language merging: when multiple skills in a library share the same domain terms, detect and flag divergence.
-
-**Skill Marketplace**
-- COVENANT.md as the publishable contract: a skill published to a marketplace must include a valid COVENANT.md.
-- Consumers can evaluate a skill's interface, dependencies, and test coverage before adopting it — without reading a single line of implementation.
-
----
-
 *Built alongside [LOGIC.md](https://github.com/SingularityAI-Dev/logic-md) · Durban, South Africa · MIT licensed*
