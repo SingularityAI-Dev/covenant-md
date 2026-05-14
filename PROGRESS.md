@@ -1,24 +1,25 @@
 # Progress
 
-> Last updated: 2026-05-06
+> Last updated: 2026-05-14
 
 ## Current Status
 
-**v1.0 MVP shipped.** 8/8 active requirements delivered across 3 phases (9 plans). The COVENANT.md framework now validates, lints, diffs, graphs, tests, and generates skills — all driven by a contract-aware generic runner. 56 Jest tests passing.
+**v1.0 framework shipped; spec under editorial revision.** Three-pass editorial sweep of `docs/COVENANT.md` complete on branch `chore/covenant-editorial-pass-1` (15 commits ahead of `main`, awaiting review/merge). Framework code untouched; all 56 Jest tests still pass.
 
 ## Recently Completed
 
-- **Phase 3 / CLI Surface Expansion** — `lint`, `diff`, `graph` commands shipped on the now-generic foundation, plus `markdown-to-html` + `template-rendering` example skills proving the dependency graph
-- **Phase 2 / Generic Skill Execution** — `cli.js` reduced 239 → 94 lines; new `src/skill-runner.js` with simulator + process strategies; `pdf-generation` test now exits 0
-- **Phase 1 / Foundation Hygiene** — Repo-root `/src` stub deleted; Jest suite stood up; `dev` placeholder removed
+- **COVENANT.md Pass 3 (line)** — 87 em-dashes removed; 17 MUST/SHOULD/MAY normalisations against the new RFC-2119 preamble; British English already consistent; sole internal anchor verified
+- **COVENANT.md Pass 2 (developmental)** — 11 of 13 Pass 1 findings executed as atomic commits: in-spec Roadmap deleted and reconciled into root `ROADMAP.md`; `runner:` block documented (closes v1.0 spec/impl drift); new subsections for Conformance terms, File structure, Minimum viable covenant, Versioning and forward compatibility, Conformance rules; Two-Party Model condensed; ecosystem-placement sections merged
+- **COVENANT.md Pass 1 (structural)** — 13-finding review committed at `docs/editorial/COVENANT-pass-1-structural.md`
 
 ## In Progress
 
-- (None — v1.1 not yet scoped)
+- Editorial branch `chore/covenant-editorial-pass-1` ready for review and merge to `main`
 
 ## Up Next
 
-- **`/gsd:new-milestone` for v1.1** — pick from backlog: SPEC-01 (extend spec with `pattern`/`endsWith` to close the docx fixture gap), DOC-01 (docs site), PUB-01 (npm publish), MCP-01 (`covenant doctor`), PORT-01 (Python port)
+- Merge the editorial branch
+- Scope v1.1 via `/gsd:new-milestone`; backlog now includes **VALIDATOR-VERSIONING** (bring `validator.js` `covenant_version` handling into line with the new spec §Versioning, which says MUST reject unrecognised majors; v1.0 currently only warns) alongside SPEC-01, DOC-01, PUB-01, MCP-01, PORT-01
 
 ## Blocked
 
