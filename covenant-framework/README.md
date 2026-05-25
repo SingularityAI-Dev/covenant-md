@@ -16,7 +16,7 @@ COVENANT.md is a design contract layer for AI agent skills that declares:
 - **Validation**: Check COVENANT.md files for specification compliance
 - **Testing**: Execute quality fixtures defined in skills
 - **Generation**: Create new skill blueprints from templates
-- **Examples**: Four reference skills covering docx-generation, pdf-generation, markdown-to-html, and template-rendering — including a real `dependencies.skills` edge for graph walks
+- **Examples**: Four reference skills covering docx-generation, pdf-generation, markdown-to-html, and template-rendering, including a real `dependencies.skills` edge for graph walks
 
 ## Installation
 

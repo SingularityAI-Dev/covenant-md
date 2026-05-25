@@ -36,7 +36,7 @@ describe('diff: cosmetic-only changes', () => {
     const { sections } = await diffCovenants(fx('diff-base.md'), fx('diff-cosmetic-only.md'));
     expect(sections.cosmetic.length).toBeGreaterThan(0);
     expect(sections.breaking.length).toBe(0);
-    // Additive may be empty OR contain version bump info — accept both
+    // Additive may be empty OR contain version bump info, accept both
   });
 });
 
@@ -52,7 +52,7 @@ describe('diff: --strict semantics', () => {
   });
 
   test('strict + breaking + major bump → code 0', async () => {
-    // diff-removed-op has version "2.0.0" (major bump) — proper semver
+    // diff-removed-op has version "2.0.0" (major bump), proper semver
     const { code } = await diffCovenants(
       fx('diff-base.md'),
       fx('diff-removed-op.md'),

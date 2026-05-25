@@ -1,5 +1,5 @@
 /**
- * COVENANT.md linter — heuristic design-quality checks.
+ * COVENANT.md linter, heuristic design-quality checks.
  *
  * Exports lintCovenant(skillPath, opts?) → Promise<{ code, findings }>.
  *
@@ -67,7 +67,7 @@ export async function lintCovenant(skillPath, opts = {}) {
     findings.push({
       id: 'shallow-deep',
       level: 'warning',
-      message: `skill declares depth=deep but exposes ${surface.length} operations (>3) — consider whether interface is truly minimal`
+      message: `skill declares depth=deep but exposes ${surface.length} operations (>3); consider whether interface is truly minimal`
     });
   }
 
@@ -76,7 +76,7 @@ export async function lintCovenant(skillPath, opts = {}) {
     findings.push({
       id: 'missing-invariants',
       level: 'warning',
-      message: 'stable skill has no contracts.invariants — at least one is expected'
+      message: 'stable skill has no contracts.invariants; at least one is expected'
     });
   }
 
@@ -95,7 +95,7 @@ export async function lintCovenant(skillPath, opts = {}) {
     findings.push({
       id: 'shallow-skill-too-few-ops',
       level: 'info',
-      message: `shallow skill exposes only ${surface.length} operation${surface.length === 1 ? '' : 's'} — may be too narrow to justify its own folder`
+      message: `shallow skill exposes only ${surface.length} operation${surface.length === 1 ? '' : 's'}; may be too narrow to justify its own folder`
     });
   }
 
@@ -104,7 +104,7 @@ export async function lintCovenant(skillPath, opts = {}) {
     findings.push({
       id: 'stable-experimental-mismatch',
       level: 'info',
-      message: `stable skill at v${version} (major=0) is unusual — stable typically implies major>=1`
+      message: `stable skill at v${version} (major=0) is unusual; stable typically implies major>=1`
     });
   }
 

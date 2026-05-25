@@ -7,7 +7,7 @@ stability: stable
 domain:
   purpose: >
     Reference COVENANT.md for diff comparisons. Adds operation `delta`
-    reusing input_a/output_a — additive change with proper minor bump.
+    reusing input_a/output_a, additive change with proper minor bump.
   depth: shallow
 
 interface:
@@ -83,6 +83,6 @@ quality:
         output_a: ""
       tags: [happy-path]
 ---
-# diff-test (v1.1.0 — delta added)
+# diff-test (v1.1.0, delta added)
 
 Diff fixture: adds operation `delta` reusing existing input/output declarations.

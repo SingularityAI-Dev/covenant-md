@@ -7,7 +7,7 @@ stability: stable
 domain:
   purpose: >
     Reference COVENANT.md for diff comparisons. input_a's type changed
-    from string to object — intentional semver violation (minor bump
+    from string to object, intentional semver violation (minor bump
     despite breaking type change) to test --strict warning behavior.
   depth: shallow
 
@@ -78,6 +78,6 @@ quality:
         output_a: ""
       tags: [happy-path]
 ---
-# diff-test (v1.1.0 — input_a type changed)
+# diff-test (v1.1.0, input_a type changed)
 
 Diff fixture: input_a.type changed from string to object. Version bumped only minor (intentional semver violation for strict-mode tests).

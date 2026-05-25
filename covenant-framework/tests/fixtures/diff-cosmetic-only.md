@@ -14,7 +14,7 @@ interface:
   entry_point: SKILL.md
   surface:
     - name: alpha
-      description: Alpha operation — wording revised, behavior unchanged.
+      description: Alpha operation, wording revised, behavior unchanged.
       accepts:
         - input_a
       returns:
@@ -77,6 +77,6 @@ quality:
         output_a: ""
       tags: [happy-path]
 ---
-# diff-test (v1.0.1 — cosmetic edits)
+# diff-test (v1.0.1, cosmetic edits)
 
 Diff fixture: alpha description and domain.purpose text edited; structural identity preserved.

@@ -43,7 +43,7 @@ contracts:
       description: Transformed value.
 
   side_effects:
-    - No I/O — pure transformation.
+    - No I/O, pure transformation.
 
   invariants:
     - foo is a pure function of input_x.

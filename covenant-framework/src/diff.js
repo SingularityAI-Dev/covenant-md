@@ -198,7 +198,7 @@ export async function diffCovenants(oldPath, newPath, opts = {}) {
   const bump = classifyVersionBump(oldData.version, newData.version);
   let header = `# Diff: ${oldData.name} ${oldData.version || '?'} → ${newData.version || '?'} (${bump} bump)`;
   if (breaking.length > 0 && bump !== 'major') {
-    header = `⚠ Breaking changes detected but version is ${bump} — consider major bump.\n\n` + header;
+    header = `⚠ Breaking changes detected but version is ${bump}; consider major bump.\n\n` + header;
   }
 
   let code = 0;

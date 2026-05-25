@@ -7,7 +7,7 @@ stability: stable
 domain:
   purpose: >
     Apply a template string to a content object and return the
-    rendered result. Pure transformation — no I/O, no state.
+    rendered result. Pure transformation, no I/O, no state.
   depth: shallow
 
 interface:
@@ -54,7 +54,7 @@ contracts:
       description: True when the template is well-formed.
 
   side_effects:
-    - No file system or network I/O — pure transformation.
+    - No file system or network I/O, pure transformation.
 
   invariants:
     - render is a pure function of (template, content); the same inputs always produce the same output.
@@ -88,4 +88,4 @@ This skill is a contract-only example demonstrating a leaf node in the dependenc
 
 ## Why two operations?
 
-`render` does the substitution; `validate_template` is the dry-run check. Splitting them lets consumers verify a template before binding content to it. The interface is intentionally narrow — `depth: shallow` matches that.
+`render` does the substitution; `validate_template` is the dry-run check. Splitting them lets consumers verify a template before binding content to it. The interface is intentionally narrow; `depth: shallow` matches that.

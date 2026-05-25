@@ -12,7 +12,7 @@ domain:
     inline:
       content_object: >
         A structured data object containing the document's semantic
-        content — headings, body text, tables, lists — with no
+        content (headings, body text, tables, lists) with no
         formatting opinions. The skill applies formatting.
       output_path: >
         An absolute file system path ending in .docx where the

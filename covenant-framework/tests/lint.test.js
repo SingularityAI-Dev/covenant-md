@@ -54,10 +54,10 @@ describe('stable-experimental-mismatch heuristic (info-only)', () => {
   test('fires info when stable and version major is 0', async () => {
     // Build an in-memory test by writing a temp fixture inline is overkill;
     // instead, sanity-check the algorithm directly via a minimal inline fixture.
-    // We cover the path via a small fixture file — reuse the shallow-deep
+    // We cover the path via a small fixture file, reuse the shallow-deep
     // pattern but flip to stable + v0.x. To keep this hermetic and avoid
     // adding a fourth fixture, we test the rule via a helper-built parsed
-    // object would couple tests to internals — so use the simpler approach:
+    // object would couple tests to internals, so use the simpler approach:
     // lint-stable-no-invariants is stable but version is 1.5.0, so it does
     // NOT fire stable-experimental-mismatch. We verify the absence of false
     // positives here, and the positive path is exercised by integration
@@ -110,7 +110,7 @@ describe('--strict exit semantics', () => {
 
 describe('parse error handling', () => {
   test('missing frontmatter returns code 1 with parse-error finding', async () => {
-    // README.md has no YAML frontmatter — exercises the resolveCovenantPath
+    // README.md has no YAML frontmatter, exercises the resolveCovenantPath
     // file-path branch + the "Missing YAML frontmatter" error.
     const readmePath = path.resolve(__dirname, '..', 'README.md');
     const { code, findings } = await lintCovenant(readmePath);

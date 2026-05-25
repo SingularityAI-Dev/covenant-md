@@ -15,7 +15,7 @@
  *     using the type-default table (string→"", number→1, boolean→true,
  *     array→[], object→{}), and maintains a path-map across invocations
  *     so write→read roundtrips return the originally-stored payload.
- *     The simulator never branches on `skillName` — it operates purely
+ *     The simulator never branches on `skillName`, it operates purely
  *     from contracts, which is what makes it generic.
  *
  *   process
@@ -55,7 +55,7 @@ function isOfType(value, type) {
     case 'object':
       return typeof value === 'object' && value !== null && !Array.isArray(value);
     default:
-      // Unknown type declaration — treat as pass-through.
+      // Unknown type declaration, treat as pass-through.
       return true;
   }
 }

@@ -7,7 +7,7 @@ stability: stable
 domain:
   purpose: >
     Reference COVENANT.md for diff comparisons. Two operations
-    (alpha, beta) — gamma removed in this version (proper major bump).
+    (alpha, beta), gamma removed in this version (proper major bump).
   depth: shallow
 
 interface:
@@ -64,6 +64,6 @@ quality:
         output_a: ""
       tags: [happy-path]
 ---
-# diff-test (v2.0.0 — gamma removed)
+# diff-test (v2.0.0, gamma removed)
 
 Diff fixture: same skill identity, gamma operation removed for breaking-change tests.

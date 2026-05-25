@@ -8,3 +8,7 @@ covenant-framework/coverage/
 covenant-framework/test-input.json
 docs/handover-docs/
 docs/marketing/
+docs/editorial/
+docs/superpowers/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json

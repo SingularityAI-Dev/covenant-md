@@ -3,7 +3,7 @@
  *
  * Exports graphSkills(skillsDir, opts?) → Promise<{ code, output, error?, cyclePath? }>.
  *
- * Walks `skillsDir` one level deep — each subdirectory containing a
+ * Walks `skillsDir` one level deep, each subdirectory containing a
  * COVENANT.md becomes a node. Edges are built from the parsed
  * dependencies.skills[*].covenant paths.
  *

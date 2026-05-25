@@ -42,7 +42,7 @@ contracts:
       description: Transformed value.
 
   side_effects:
-    - No I/O — pure transformation.
+    - No I/O, pure transformation.
 
   invariants:
     - foo is a pure function of input_x.
@@ -61,4 +61,4 @@ quality:
 
 # COVENANT.md for skill-x (graph cycle fixture)
 
-Cycle pair half — skill-x → skill-y.
+Cycle pair half, skill-x → skill-y.

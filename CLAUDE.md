@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Layout
 
-All framework code lives in **`covenant-framework/`** — an ESM Node.js package (`"type": "module"`) implementing the COVENANT.md specification. There is no parallel implementation; the repo root used to host a CommonJS stub but it has been deleted.
+All framework code lives in **`covenant-framework/`**, an ESM Node.js package (`"type": "module"`) implementing the COVENANT.md specification. There is no parallel implementation; the repo root used to host a CommonJS stub but it has been deleted.
 
-- **`covenant-framework/`** — the framework: validator, test runner, generator, CLI. Edit here.
-- **`docs/COVENANT.md`** — the canonical specification. Treat as the source of truth when validator or test-runner behavior is ambiguous.
-- **`handover-docs/handover.md`** — historical handover note. Useful for context, but verify against current code before relying on its claims.
-- **`test-skill/`** — a sample skill (COVENANT.md + SKILL.md) used as a fixture target.
+- **`covenant-framework/`**, the framework: validator, test runner, generator, CLI. Edit here.
+- **`docs/COVENANT.md`**, the canonical specification. Treat as the source of truth when validator or test-runner behavior is ambiguous.
+- **`handover-docs/handover.md`**, historical handover note. Useful for context, but verify against current code before relying on its claims.
+- **`test-skill/`**, a sample skill (COVENANT.md + SKILL.md) used as a fixture target.
 
 ## Working Commands
 
@@ -30,23 +30,23 @@ Tests live in `tests/` (Jest, run via `npm test` under `node --experimental-vm-m
 
 ## Architecture
 
-The framework implements the COVENANT.md spec — a YAML-frontmatter-plus-markdown design contract that sits alongside `SKILL.md` in a skill folder. Read `docs/COVENANT.md` for the full spec; the short version: a covenant declares a skill's `domain`, `interface.surface` (operations), `dependencies`, typed `contracts`, and `quality.fixtures`.
+The framework implements the COVENANT.md spec, a YAML-frontmatter-plus-markdown design contract that sits alongside `SKILL.md` in a skill folder. Read `docs/COVENANT.md` for the full spec; the short version: a covenant declares a skill's `domain`, `interface.surface` (operations), `dependencies`, typed `contracts`, and `quality.fixtures`.
 
 Four modules in `covenant-framework/src/` form the pipeline:
 
-1. **`validator.js`** — parses YAML frontmatter, checks required fields (`covenant_version`, `name`), validates kebab-case names, semver versions, that fixtures reference operations in `interface.surface`, and detects dependency cycles when covenant paths are reachable.
-2. **`test.js`** (`CovenantTestRunner`) — extracts fixtures from frontmatter **and** from legacy ` ```covenant-fixture ` JSON code blocks, topologically sorts them by `depends_on`, then invokes a caller-supplied `skillRunner(skillName, operation, input)` and applies quality-gate logic to compute pass/fail/skip.
-3. **`generate.js`** — Handlebars-driven interactive scaffolder using `inquirer`; emits a COVENANT.md + SKILL.md pair from `src/templates/`.
-4. **`cli.js`** — `commander`-based entrypoint that wires the three together.
+1. **`validator.js`**, parses YAML frontmatter, checks required fields (`covenant_version`, `name`), validates kebab-case names, semver versions, that fixtures reference operations in `interface.surface`, and detects dependency cycles when covenant paths are reachable.
+2. **`test.js`** (`CovenantTestRunner`), extracts fixtures from frontmatter **and** from legacy ` ```covenant-fixture ` JSON code blocks, topologically sorts them by `depends_on`, then invokes a caller-supplied `skillRunner(skillName, operation, input)` and applies quality-gate logic to compute pass/fail/skip.
+3. **`generate.js`**, Handlebars-driven interactive scaffolder using `inquirer`; emits a COVENANT.md + SKILL.md pair from `src/templates/`.
+4. **`cli.js`**, `commander`-based entrypoint that wires the three together.
 
 ### The skillRunner contract
 
-`test.js` does not execute skills itself — it delegates to a `skillRunner(skillName, operation, input)` function the caller supplies. `cli.js` builds that function by calling `createSkillRunner({ covenantPath })` from `src/skill-runner.js`, which inspects the skill's COVENANT.md and returns one of two strategies:
+`test.js` does not execute skills itself; it delegates to a `skillRunner(skillName, operation, input)` function the caller supplies. `cli.js` builds that function by calling `createSkillRunner({ covenantPath })` from `src/skill-runner.js`, which inspects the skill's COVENANT.md and returns one of two strategies:
 
-- **`simulator`** (default) — A contract-aware simulator. It validates inputs against `contracts.inputs` (required fields, types, nested schema), synthesizes outputs from each operation's `returns` list combined with `contracts.outputs[<field>].schema` defaults, and maintains a write/read path-map so roundtrip fixtures (write to `output_path`, then read from the same `input_path`) work generically across any skill.
-- **`process`** — Spawns an external runner script declared by the skill via a top-level `runner: { strategy: process, command: [...] }` block in COVENANT.md. The runner exchanges JSON `{operation, input}` / `{success, output, error}` over stdin/stdout. No example skill ships using this strategy yet.
+- **`simulator`** (default), A contract-aware simulator. It validates inputs against `contracts.inputs` (required fields, types, nested schema), synthesizes outputs from each operation's `returns` list combined with `contracts.outputs[<field>].schema` defaults, and maintains a write/read path-map so roundtrip fixtures (write to `output_path`, then read from the same `input_path`) work generically across any skill.
+- **`process`**, Spawns an external runner script declared by the skill via a top-level `runner: { strategy: process, command: [...] }` block in COVENANT.md. The runner exchanges JSON `{operation, input}` / `{success, output, error}` over stdin/stdout. No example skill ships using this strategy yet.
 
-The runner has no hardcoded knowledge of any specific skill. To support a new skill, write its COVENANT.md — no framework changes required.
+The runner has no hardcoded knowledge of any specific skill. To support a new skill, write its COVENANT.md; no framework changes required.
 
 #### Known fixture gap
 
@@ -61,5 +61,5 @@ Two formats are supported and both must keep working:
 ## Conventions
 
 - ESM only inside `covenant-framework/` (`import`/`export`, `.js` extensions in import paths).
-- `*.backup` files (`cli.js.backup`, `validator.js.backup`) are prior versions kept for reference — leave alone unless explicitly cleaning up.
+- `*.backup` files (`cli.js.backup`, `validator.js.backup`) are prior versions kept for reference, leave alone unless explicitly cleaning up.
 - `examples/my-new-skill/` is intentionally empty (it's the target dir for `npm run generate`).

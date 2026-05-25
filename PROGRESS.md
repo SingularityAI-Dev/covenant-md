@@ -8,9 +8,9 @@
 
 ## Recently Completed
 
-- **COVENANT.md Pass 3 (line)** — 87 em-dashes removed; 17 MUST/SHOULD/MAY normalisations against the new RFC-2119 preamble; British English already consistent; sole internal anchor verified
-- **COVENANT.md Pass 2 (developmental)** — 11 of 13 Pass 1 findings executed as atomic commits: in-spec Roadmap deleted and reconciled into root `ROADMAP.md`; `runner:` block documented (closes v1.0 spec/impl drift); new subsections for Conformance terms, File structure, Minimum viable covenant, Versioning and forward compatibility, Conformance rules; Two-Party Model condensed; ecosystem-placement sections merged
-- **COVENANT.md Pass 1 (structural)** — 13-finding review committed at `docs/editorial/COVENANT-pass-1-structural.md`
+- **COVENANT.md Pass 3 (line)**, 87 em-dashes removed; 17 MUST/SHOULD/MAY normalisations against the new RFC-2119 preamble; British English already consistent; sole internal anchor verified
+- **COVENANT.md Pass 2 (developmental)**, 11 of 13 Pass 1 findings executed as atomic commits: in-spec Roadmap deleted and reconciled into root `ROADMAP.md`; `runner:` block documented (closes v1.0 spec/impl drift); new subsections for Conformance terms, File structure, Minimum viable covenant, Versioning and forward compatibility, Conformance rules; Two-Party Model condensed; ecosystem-placement sections merged
+- **COVENANT.md Pass 1 (structural)**, 13-finding review committed at `docs/editorial/COVENANT-pass-1-structural.md`
 
 ## In Progress
 

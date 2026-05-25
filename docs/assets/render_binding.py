@@ -1,8 +1,8 @@
 """
-COVENANT.md — bilateral binding illustration.
+COVENANT.md: bilateral binding illustration.
 
 Design from first principles: COVENANT.md is a *contract*, not a pipeline.
-Two parties — Skill (producer) and Consumer (caller) — both bind themselves to
+Two parties, Skill (producer) and Consumer (caller), both bind themselves to
 a single document that declares the five things every well-designed skill must
 answer: domain, interface, dependencies, contracts, quality.
 
@@ -26,7 +26,7 @@ INK         = (201, 209, 217)     # primary text
 MUTED       = (139, 148, 158)     # captions
 DIM         = (110, 118, 129)     # role labels
 
-# document — warm parchment in dark
+# document, warm parchment in dark
 DOC_FILL    = (28, 22, 14)
 DOC_BORDER  = (212, 168, 87)      # gold
 DOC_KEY     = (230, 195, 120)     # gold-ish for YAML keys
@@ -274,7 +274,7 @@ d.ellipse((seal_cx - seal_r + s(6), seal_cy - seal_r + s(6),
            seal_cx + seal_r - s(6), seal_cy + seal_r - s(6)),
           outline=SEAL_RING, width=s(1))
 
-# seal text — top arc-ish (we'll just stack two centred lines)
+# seal text, top arc-ish (we'll just stack two centred lines)
 seal_top = "BOUND BY"
 stw = text_w(seal_top, font_seal_top)
 d.text((seal_cx - stw // 2, seal_cy - s(11)), seal_top, fill=SEAL_TEXT, font=font_seal_top)

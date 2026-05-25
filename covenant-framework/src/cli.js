@@ -29,7 +29,7 @@ program
       const testRunner = new CovenantTestRunner({ covenantPath, skillRunner });
       const results = await testRunner.run();
 
-      // Existing result-printing block — preserved verbatim from prior cli.js:
+      // Existing result-printing block, preserved verbatim from prior cli.js:
       if (results.overall) {
         console.log(`✅ All tests passed! (${results.passedCount}/${results.fixtureCount} fixtures passed, ${results.failedCount} failed, ${results.skippedCount} skipped)`);
       } else {
