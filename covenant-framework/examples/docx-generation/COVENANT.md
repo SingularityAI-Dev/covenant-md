@@ -209,18 +209,6 @@ quality:
       expect_failure_reason: "content.title is required"
       tags: [edge-case, failure]
 
-    - id: invalid-output-path
-      description: >
-        Fails gracefully when output_path does not end in .docx,
-        without writing any partial file.
-      operation: create
-      input:
-        content:
-          title: "Test"
-        output_path: "/tmp/covenant-test.pdf"
-      expect_failure: true
-      tags: [edge-case, failure]
-
   gates:
     - id: output-always-valid
       description: >

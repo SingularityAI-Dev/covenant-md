@@ -2,6 +2,8 @@
 
 **The design contract layer for AI agent skills.**
 
+> Licensed under [CC-BY-4.0](../LICENSE-spec). The reference framework code is MIT; the "COVENANT.md" name is governed by [TRADEMARK.md](../TRADEMARK.md).
+
 A portable, framework-agnostic file format for declaring *how a skill is designed* (its domain, public interface, dependencies, typed contracts, and proof-of-correctness fixtures) before a single line of implementation is written.
 
 ---

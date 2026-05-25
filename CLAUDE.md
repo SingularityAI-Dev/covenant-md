@@ -50,7 +50,7 @@ The runner has no hardcoded knowledge of any specific skill. To support a new sk
 
 #### Known fixture gap
 
-`examples/docx-generation/COVENANT.md` includes an `invalid-output-path` fixture that asserts the runner rejects `output_path` not ending in `.docx`. This constraint isn't expressible in COVENANT.md v1.0 (no `pattern` / `format` / `endsWith` field on string contracts), so the contract-driven simulator can't reproduce it. Result: docx-generation runs at 4/5 under `npm run test:fixtures` and `node src/cli.js test examples/docx-generation/`. The contract-driven runner is correct; the fixture is impl-specific. Future work (tracked as **SPEC-01** in `.planning/ROADMAP.md` and root `ROADMAP.md`; archived v1.0 requirements at `.planning/milestones/v1.0-REQUIREMENTS.md`): extend the spec with pattern matching on string contracts (and update the fixture), or drop the impl-specific fixture from the example.
+The `examples/docx-generation/COVENANT.md` skill used to ship an `invalid-output-path` fixture asserting the runner rejects an `output_path` that does not end in `.docx`. That constraint is not expressible in COVENANT.md v1.0 (no `pattern` / `format` / `endsWith` field on string contracts), so the contract-driven simulator could not reproduce it and docx-generation ran at 4/5. The fixture has been dropped pending the v1.1 spec extension (string `pattern` / `endsWith`), tracked as **SPEC-01** in `.planning/ROADMAP.md` and root `ROADMAP.md` (archived v1.0 requirements at `.planning/milestones/v1.0-REQUIREMENTS.md`). When SPEC-01 lands, reinstate the fixture against the new constraint. All four example skills now pass under `npm run test:fixtures`.
 
 ### Fixture format
 

@@ -8,7 +8,7 @@
     "validate": "node src/cli.js validate",
     "test": "npm run test:framework",
     "test:framework": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:fixtures": "node src/cli.js test examples/docx-generation/",
+    "test:fixtures": "node src/cli.js test examples/markdown-to-html/ && node src/cli.js test examples/pdf-generation/ && node src/cli.js test examples/template-rendering/ && node src/cli.js test examples/docx-generation/",
     "lint": "node src/cli.js lint",
     "diff": "node src/cli.js diff",
     "graph": "node src/cli.js graph",
