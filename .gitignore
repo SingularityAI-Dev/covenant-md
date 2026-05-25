@@ -3,3 +3,8 @@ node_modules/
 *.backup
 .planning/
 opensrc/
+coverage/
+covenant-framework/coverage/
+covenant-framework/test-input.json
+docs/handover-docs/
+docs/marketing/
