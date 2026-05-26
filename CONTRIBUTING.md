@@ -25,7 +25,7 @@ npm run generate -- my-new-skill
 ```
 
 Both `npm test` and `npm run test:fixtures` must pass before you open a pull
-request. CI runs the same two steps on Node 18 and Node 22.
+request. CI runs the same two steps on Node 20 and Node 22.
 
 ## Conventions
 
