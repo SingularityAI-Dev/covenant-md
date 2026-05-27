@@ -39,7 +39,7 @@
   "dependencies": {
     "commander": "^11.0.0",
     "handlebars": "^4.7.9",
-    "inquirer": "^13.4.2",
+    "inquirer": "^14.0.0",
     "jsonschema": "^1.4.1",
     "marked": "^9.0.0",
     "yaml": "^2.3.1"
