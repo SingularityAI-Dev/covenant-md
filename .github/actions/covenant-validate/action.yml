@@ -1,0 +1,47 @@
+name: 'COVENANT.md Validate'
+description: 'Validate COVENANT.md files against the spec'
+inputs:
+  files:
+    description: 'Glob pattern for COVENANT.md files to validate'
+    required: false
+    default: '**/COVENANT.md'
+  strict:
+    description: 'Fail on lint warnings (not just errors)'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
+      with:
+        node-version: '20'
+    - name: Install CLI
+      shell: bash
+      run: npm install -g @covenant-md/cli
+    - name: Validate files
+      shell: bash
+      run: |
+        shopt -s globstar nullglob
+        FILES=(${{ inputs.files }})
+        if [ ${#FILES[@]} -eq 0 ]; then
+          echo "No COVENANT.md files found matching pattern: ${{ inputs.files }}"
+          exit 0
+        fi
+        ERRORS=0
+        for f in "${FILES[@]}"; do
+          echo "Validating: $f"
+          if ! covenant validate "$f"; then
+            ERRORS=$((ERRORS + 1))
+          fi
+          if [ "${{ inputs.strict }}" = "true" ]; then
+            if ! covenant lint "$f"; then
+              ERRORS=$((ERRORS + 1))
+            fi
+          fi
+        done
+        if [ $ERRORS -gt 0 ]; then
+          echo "::error::$ERRORS file(s) failed validation"
+          exit 1
+        fi
+        echo "All files valid!"
