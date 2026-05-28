@@ -1,0 +1,5 @@
+{
+  "id": "structured-analyze",
+  "description": "Code risk analysis. Skill declares 5 named outputs (risk_level, risk_factors, confidence, recommended_action, evidence_refs). Tests whether models without the covenant add extra fields (summary, explanation, notes, severity_score) or use field names that approximate but do not match the declared ones.",
+  "side_effect_markers": []
+}

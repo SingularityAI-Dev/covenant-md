@@ -17,7 +17,7 @@ import { parseResponse, scoreResponse, aggregate } from './scoring.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function parseArgs(argv) {
-  const args = { adapter: 'mock', trials: 10, temperature: 0.2, model: undefined };
+  const args = { adapter: 'mock', trials: 10, temperature: 0.2, model: undefined, outDir: undefined };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--task') args.task = argv[++i];
@@ -25,6 +25,7 @@ function parseArgs(argv) {
     else if (a === '--trials') args.trials = parseInt(argv[++i], 10);
     else if (a === '--temperature') args.temperature = parseFloat(argv[++i]);
     else if (a === '--model') args.model = argv[++i];
+    else if (a === '--out-dir') args.outDir = argv[++i];
   }
   if (!args.task) {
     console.error('Usage: node run.mjs --task tasks/<name> [--adapter mock|openai|anthropic]');
@@ -149,7 +150,9 @@ async function main() {
   printSummary({ args, task, A: A.aggregate, B: B.aggregate });
 
   const ts = new Date().toISOString().replace(/[:.]/g, '-');
-  const outDir = resolve(__dirname, 'results', ts);
+  const outDir = args.outDir
+    ? resolve(args.outDir)
+    : resolve(__dirname, 'results', ts);
   await mkdir(outDir, { recursive: true });
   await writeFile(
     join(outDir, 'run.json'),
@@ -158,6 +161,7 @@ async function main() {
         meta: {
           task: task.meta.id,
           adapter: adapter.name,
+          model: args.model || null,
           trials: args.trials,
           temperature: args.temperature,
           timestamp: new Date().toISOString(),

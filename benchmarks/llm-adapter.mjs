@@ -71,7 +71,54 @@ export const anthropic = {
   },
 };
 
-export const adapters = { mock, openai, anthropic };
+/**
+ * NVIDIA NIM adapter. Uses the OpenAI-compatible Chat Completions endpoint at
+ * https://integrate.api.nvidia.com/v1. Requires NVIDIA_API_KEY in env. The
+ * --model flag selects any NIM-hosted model by its slug, e.g.
+ * `deepseek-ai/deepseek-v3_1-terminus`, `moonshotai/kimi-k2-instruct-0905`,
+ * `minimaxai/minimax-m2.7`, `nvidia/nemotron-3-super-120b-a12b`,
+ * `nvidia/nemotron-3-nano-30b-a3b`.
+ */
+export const nim = {
+  name: 'nim',
+  async complete({ system, user, temperature, model }) {
+    const apiKey = process.env.NVIDIA_API_KEY;
+    if (!apiKey) {
+      throw new Error('NVIDIA_API_KEY is not set in the environment.');
+    }
+    if (!model) {
+      throw new Error(
+        'nim adapter requires --model (e.g. deepseek-ai/deepseek-v3_1-terminus)'
+      );
+    }
+    const resp = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: user },
+        ],
+        temperature,
+        max_tokens: 1024,
+      }),
+    });
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`NIM ${resp.status} for ${model}: ${errText.slice(0, 500)}`);
+    }
+    const data = await resp.json();
+    const text = (data.choices?.[0]?.message?.content ?? '').trim();
+    return { text };
+  },
+};
+
+export const adapters = { mock, openai, anthropic, nim };
 
 export function selectAdapter(name) {
   const a = adapters[name];
