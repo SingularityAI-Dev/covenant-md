@@ -39,6 +39,6 @@
     "@covenant-md/core": "^1.0.0",
     "commander": "^11.0.0",
     "handlebars": "^4.7.9",
-    "inquirer": "^13.4.2"
+    "inquirer": "^14.0.0"
   }
 }
