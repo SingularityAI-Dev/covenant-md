@@ -1,114 +1,127 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="Every COVENANT.md answers five questions about a skill: domain, interface, dependencies, contracts, and quality. Together they bind the skill (producer) and the consumer (caller) as a two-party agreement.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" width="1280" height="600" role="img" aria-label="Every COVENANT.md answers five questions about a skill: domain, interface, dependencies, contracts, and quality. The skill (producer) and the consumer (caller) sign the same agreement: a two-party binding sealed by the covenant.">
   <defs>
     <style>
       .bg { fill: #0d1117; }
       .panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
       .card { fill: #161b22; stroke: #d4a857; stroke-width: 1.8; }
-      .title { fill: #c9d1d9; font: 600 18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
+      .title { fill: #c9d1d9; font: 600 20px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
       .subtitle { fill: #8b949e; font: 400 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-      .qhead { fill: #d4a857; font: 700 17px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
+      .qhead { fill: #d4a857; font: 700 18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
       .qbody { fill: #c9d1d9; font: 400 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
       .qfield { fill: #8b949e; font: 600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.10em; }
       .tag { fill: #8b949e; font: 600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.14em; }
       .muted { fill: #8b949e; font: 400 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-      .sig { fill: #d4a857; font: 700 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .sig { fill: #d4a857; font: 700 16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
     </style>
-    <linearGradient id="seal" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="seal-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#d4a857"/>
       <stop offset="100%" stop-color="#a07a2c"/>
     </linearGradient>
+    <radialGradient id="seal-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4a857" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#d4a857" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#d4a857" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <rect class="bg" width="1200" height="520"/>
+  <rect class="bg" width="1280" height="600"/>
 
-  <text x="600" y="40" text-anchor="middle" class="title">EVERY COVENANT ANSWERS FIVE QUESTIONS</text>
-  <text x="600" y="62" text-anchor="middle" class="subtitle">five sections · two parties · one binding</text>
+  <text x="640" y="44" text-anchor="middle" class="title">EVERY COVENANT ANSWERS FIVE QUESTIONS</text>
+  <text x="640" y="68" text-anchor="middle" class="subtitle">five sections · two parties · one binding</text>
 
-  <g transform="translate(60,100)">
-    <rect class="card" width="210" height="270" rx="10"/>
-    <text x="16" y="28" class="qfield">SECTION · 01</text>
-    <text x="16" y="56" class="qhead">DOMAIN</text>
-    <text x="16" y="84" class="qbody">who are you?</text>
-    <line x1="16" y1="100" x2="194" y2="100" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
-    <text x="16" y="128" class="muted">purpose</text>
-    <text x="16" y="148" class="muted">depth</text>
-    <text x="16" y="168" class="muted">ubiquitous language</text>
-    <text x="16" y="208" class="muted" font-style="italic">"the skill's identity</text>
-    <text x="16" y="226" class="muted" font-style="italic">and the problem</text>
-    <text x="16" y="244" class="muted" font-style="italic">space it owns"</text>
+  <g transform="translate(30,110)">
+    <rect class="card" width="220" height="290" rx="10"/>
+    <text x="18" y="30" class="qfield">SECTION · 01</text>
+    <text x="18" y="60" class="qhead">DOMAIN</text>
+    <text x="18" y="88" class="qbody">who are you?</text>
+    <line x1="18" y1="104" x2="202" y2="104" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
+    <text x="18" y="134" class="muted">purpose</text>
+    <text x="18" y="156" class="muted">depth</text>
+    <text x="18" y="178" class="muted">ubiquitous language</text>
+    <text x="18" y="222" class="muted" font-style="italic">"the skill's identity</text>
+    <text x="18" y="240" class="muted" font-style="italic">and the problem</text>
+    <text x="18" y="258" class="muted" font-style="italic">space it owns"</text>
   </g>
 
-  <g transform="translate(300,100)">
-    <rect class="card" width="210" height="270" rx="10"/>
-    <text x="16" y="28" class="qfield">SECTION · 02</text>
-    <text x="16" y="56" class="qhead">INTERFACE</text>
-    <text x="16" y="84" class="qbody">what do you expose?</text>
-    <line x1="16" y1="100" x2="194" y2="100" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
-    <text x="16" y="128" class="muted">surface (operations)</text>
-    <text x="16" y="148" class="muted">accepts / returns</text>
-    <text x="16" y="168" class="muted">breaking_changes</text>
-    <text x="16" y="208" class="muted" font-style="italic">"the boundary</text>
-    <text x="16" y="226" class="muted" font-style="italic">that stops internal</text>
-    <text x="16" y="244" class="muted" font-style="italic">complexity leaking"</text>
+  <g transform="translate(280,110)">
+    <rect class="card" width="220" height="290" rx="10"/>
+    <text x="18" y="30" class="qfield">SECTION · 02</text>
+    <text x="18" y="60" class="qhead">INTERFACE</text>
+    <text x="18" y="88" class="qbody">what do you expose?</text>
+    <line x1="18" y1="104" x2="202" y2="104" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
+    <text x="18" y="134" class="muted">surface (operations)</text>
+    <text x="18" y="156" class="muted">accepts / returns</text>
+    <text x="18" y="178" class="muted">breaking_changes</text>
+    <text x="18" y="222" class="muted" font-style="italic">"the boundary</text>
+    <text x="18" y="240" class="muted" font-style="italic">that stops internal</text>
+    <text x="18" y="258" class="muted" font-style="italic">complexity leaking"</text>
   </g>
 
-  <g transform="translate(540,100)">
-    <rect class="card" width="210" height="270" rx="10"/>
-    <text x="16" y="28" class="qfield">SECTION · 03</text>
-    <text x="16" y="56" class="qhead">DEPENDENCIES</text>
-    <text x="16" y="84" class="qbody">what do you need?</text>
-    <line x1="16" y1="100" x2="194" y2="100" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
-    <text x="16" y="128" class="muted">skills</text>
-    <text x="16" y="148" class="muted">mcp_servers</text>
-    <text x="16" y="168" class="muted">packages · environment</text>
-    <text x="16" y="208" class="muted" font-style="italic">"the tools, siblings,</text>
-    <text x="16" y="226" class="muted" font-style="italic">and environment a</text>
-    <text x="16" y="244" class="muted" font-style="italic">correct call needs"</text>
+  <g transform="translate(530,110)">
+    <rect class="card" width="220" height="290" rx="10"/>
+    <text x="18" y="30" class="qfield">SECTION · 03</text>
+    <text x="18" y="60" class="qhead">DEPENDENCIES</text>
+    <text x="18" y="88" class="qbody">what do you need?</text>
+    <line x1="18" y1="104" x2="202" y2="104" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
+    <text x="18" y="134" class="muted">skills</text>
+    <text x="18" y="156" class="muted">mcp_servers</text>
+    <text x="18" y="178" class="muted">packages · environment</text>
+    <text x="18" y="222" class="muted" font-style="italic">"the tools, siblings,</text>
+    <text x="18" y="240" class="muted" font-style="italic">and environment a</text>
+    <text x="18" y="258" class="muted" font-style="italic">correct call needs"</text>
   </g>
 
-  <g transform="translate(780,100)">
-    <rect class="card" width="210" height="270" rx="10"/>
-    <text x="16" y="28" class="qfield">SECTION · 04</text>
-    <text x="16" y="56" class="qhead">CONTRACTS</text>
-    <text x="16" y="84" class="qbody">what do you promise?</text>
-    <line x1="16" y1="100" x2="194" y2="100" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
-    <text x="16" y="128" class="muted">inputs (typed)</text>
-    <text x="16" y="148" class="muted">outputs (typed)</text>
-    <text x="16" y="168" class="muted">invariants</text>
-    <text x="16" y="208" class="muted" font-style="italic">"typed inputs and</text>
-    <text x="16" y="226" class="muted" font-style="italic">outputs, plus invariants</text>
-    <text x="16" y="244" class="muted" font-style="italic">that always hold"</text>
+  <g transform="translate(780,110)">
+    <rect class="card" width="220" height="290" rx="10"/>
+    <text x="18" y="30" class="qfield">SECTION · 04</text>
+    <text x="18" y="60" class="qhead">CONTRACTS</text>
+    <text x="18" y="88" class="qbody">what do you promise?</text>
+    <line x1="18" y1="104" x2="202" y2="104" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
+    <text x="18" y="134" class="muted">inputs (typed)</text>
+    <text x="18" y="156" class="muted">outputs (typed)</text>
+    <text x="18" y="178" class="muted">invariants</text>
+    <text x="18" y="222" class="muted" font-style="italic">"typed inputs and</text>
+    <text x="18" y="240" class="muted" font-style="italic">outputs, plus invariants</text>
+    <text x="18" y="258" class="muted" font-style="italic">that always hold"</text>
   </g>
 
-  <g transform="translate(1020,100)">
-    <rect class="card" width="120" height="270" rx="10"/>
-    <text x="12" y="28" class="qfield">SECTION · 05</text>
-    <text x="12" y="56" class="qhead">QUALITY</text>
-    <text x="12" y="84" class="qbody">how do you prove?</text>
-    <line x1="12" y1="100" x2="108" y2="100" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
-    <text x="12" y="128" class="muted">fixtures</text>
-    <text x="12" y="148" class="muted">gates</text>
-    <text x="12" y="188" class="muted" font-style="italic">"fixtures</text>
-    <text x="12" y="206" class="muted" font-style="italic">and gates</text>
-    <text x="12" y="224" class="muted" font-style="italic">that prove</text>
-    <text x="12" y="242" class="muted" font-style="italic">the contract"</text>
+  <g transform="translate(1030,110)">
+    <rect class="card" width="220" height="290" rx="10"/>
+    <text x="18" y="30" class="qfield">SECTION · 05</text>
+    <text x="18" y="60" class="qhead">QUALITY</text>
+    <text x="18" y="88" class="qbody">how do you prove it?</text>
+    <line x1="18" y1="104" x2="202" y2="104" stroke="#d4a857" stroke-width="1" opacity="0.4"/>
+    <text x="18" y="134" class="muted">fixtures</text>
+    <text x="18" y="156" class="muted">gates</text>
+    <text x="18" y="222" class="muted" font-style="italic">"fixtures and gates</text>
+    <text x="18" y="240" class="muted" font-style="italic">that demonstrate</text>
+    <text x="18" y="258" class="muted" font-style="italic">the contract holds"</text>
   </g>
 
-  <g transform="translate(60,410)">
-    <rect class="panel" width="510" height="80" rx="8"/>
-    <text x="16" y="26" class="tag">PARTY ONE · PRODUCER</text>
-    <text x="16" y="54" class="sig">The Skill</text>
-    <text x="16" y="72" class="muted">covenants to deliver every operation declared in the interface, no more and no less</text>
+  <g transform="translate(60,460)">
+    <rect class="panel" width="540" height="100" rx="10"/>
+    <text x="20" y="32" class="tag">PARTY ONE · PRODUCER</text>
+    <text x="20" y="64" class="sig">The Skill</text>
+    <text x="20" y="86" class="muted">covenants to deliver every operation declared in the interface,</text>
+    <text x="20" y="102" class="muted">no more and no less</text>
   </g>
 
-  <circle cx="600" cy="450" r="38" fill="url(#seal)" opacity="0.9"/>
-  <text x="600" y="447" text-anchor="middle" class="qfield" fill="#0d1117" font-size="9">BOUND BY</text>
-  <text x="600" y="462" text-anchor="middle" class="qhead" fill="#0d1117" font-size="12">v1.0</text>
+  <g transform="translate(640,510)">
+    <circle r="58" fill="url(#seal-glow)">
+      <animate attributeName="opacity" values="0.35;0.85;0.35" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="42" fill="url(#seal-gradient)" opacity="0.92">
+      <animate attributeName="r" values="42;44;42" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+    <text y="-4" text-anchor="middle" class="qfield" fill="#0d1117" font-size="9">BOUND BY</text>
+    <text y="14" text-anchor="middle" class="qhead" fill="#0d1117" font-size="14">v1.0</text>
+  </g>
 
-  <g transform="translate(630,410)">
-    <rect class="panel" width="510" height="80" rx="8"/>
-    <text x="16" y="26" class="tag">PARTY TWO · CONSUMER</text>
-    <text x="16" y="54" class="sig">The Caller</text>
-    <text x="16" y="72" class="muted">covenants to call only what is exposed and to honour the contracts as written</text>
+  <g transform="translate(680,460)">
+    <rect class="panel" width="540" height="100" rx="10"/>
+    <text x="20" y="32" class="tag">PARTY TWO · CONSUMER</text>
+    <text x="20" y="64" class="sig">The Caller</text>
+    <text x="20" y="86" class="muted">covenants to call only what is exposed and to honour</text>
+    <text x="20" y="102" class="muted">the contracts as written</text>
   </g>
 </svg>
