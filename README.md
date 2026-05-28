@@ -237,13 +237,14 @@ tiers (parser, runtime, full) are landing in v1.1 (see the roadmap below).
 - [`covenant-md`](https://pypi.org/project/covenant-md/) on PyPI (Python SDK, alpha; parser + validator with verdict parity against the shared `spec/fixtures/`)
 - Canonical [`spec/schema.json`](spec/schema.json) plus 15 conformance fixtures and three conformance tiers; see [`docs/IMPLEMENTER-GUIDE.md`](docs/IMPLEMENTER-GUIDE.md)
 - [Claude Code plugin](integrations/claude-code/) with five slash commands (`/covenant:validate`, `/covenant:check`, `/covenant:init`, `/covenant:diff`, `/covenant:graph`)
+- [Eval harness](benchmarks/) measuring the contract thesis (interface adherence, output fidelity, undeclared side effects) with a wired Anthropic adapter; results published when runs land
 - Reusable [GitHub Action](.github/actions/covenant-validate/action.yml) for CI
 - Four worked example skills, validated end-to-end
 
 ### On the roadmap
 
 - VSCode extension
-- Evaluation benchmark harness
+- Cross-model published bench runs (Anthropic adapter wired; runs pending)
 
 See [`ROADMAP.md`](ROADMAP.md) for the full arc.
 

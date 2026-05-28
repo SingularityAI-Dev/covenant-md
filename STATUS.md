@@ -14,6 +14,11 @@ pass their fixtures.
 
 ## Recent
 
+- 2026-05-28: P7 eval harness landed at `benchmarks/`. Three scored metrics
+  (interface adherence, output fidelity, undeclared side effects), mock adapter
+  for CI smoke, Anthropic adapter wired for real runs. `scripts/verify-go.sh`
+  added: a single pre-launch gate that runs every quality check and prints
+  PASS/FAIL.
 - 2026-05-28: P6 Claude Code plugin landed at `integrations/claude-code/`. Five slash commands
   (`/covenant:validate`, `/covenant:check`, `/covenant:init`, `/covenant:diff`,
   `/covenant:graph`) orchestrating the `@covenant-md/mcp` tools.

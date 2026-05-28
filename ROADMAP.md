@@ -36,7 +36,7 @@
 
 - [x] Claude Code plugin with `/covenant:` slash commands (`integrations/claude-code/`).
 - [ ] VSCode extension (syntax, snippets, inline validation).
-- [ ] Eval benchmark harness measuring the contract thesis.
+- [x] Eval benchmark harness measuring the contract thesis (`benchmarks/`, Anthropic adapter wired). Cross-model published runs pending.
 - [ ] Skill marketplace / registry (separate product).
 - [ ] Full LOGIC.md runtime integration (separate repo).
 - [ ] Changelog generation from `covenant diff` output.
