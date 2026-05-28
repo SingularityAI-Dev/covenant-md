@@ -53,31 +53,45 @@ with fixtures. That is the shift: **skills as contracts.** #SkillsAsContracts
 
 ## Quickstart
 
-The reference framework lives in `covenant-framework/`. Run every command from
-there.
+Install the CLI from npm:
+
+```bash
+npm install -g @covenant-md/cli
+covenant validate path/to/COVENANT.md
+```
+
+Or use the library directly:
+
+```bash
+npm install @covenant-md/core
+```
+
+### From source
+
+The repository is an npm workspaces monorepo: `packages/core` (`@covenant-md/core`)
+and `packages/cli` (`@covenant-md/cli`).
 
 ```bash
 git clone https://github.com/SingularityAI-Dev/covenant-md.git
-cd covenant-md/covenant-framework
+cd covenant-md
 npm ci
 
 # Validate a covenant against the spec
-npm run validate -- examples/docx-generation/COVENANT.md
+node packages/cli/src/cli.js validate examples/docx-generation/COVENANT.md
 
-# Run an example skill's fixtures through the contract-driven runner
+# Run the example skills through the contract-driven runner
 npm run test:fixtures
 
 # Scaffold a new skill (interactive blueprint)
-npm run generate -- my-new-skill
+node packages/cli/src/cli.js generate
 ```
 
-The CLI also ships `lint`, `diff`, and `graph`; see `covenant-framework` for
-details.
+The CLI ships `validate`, `test`, `generate`, `lint`, `diff`, and `graph`.
 
 ## Examples tour
 
-Four worked example skills live under `covenant-framework/examples/`, each a
-complete COVENANT.md you can validate and run:
+Four worked example skills live under `examples/`, each a complete COVENANT.md
+you can validate and run:
 
 - **markdown-to-html**: a single pure transform; the smallest useful covenant.
 - **pdf-generation**: document creation with output contracts.
@@ -85,8 +99,8 @@ complete COVENANT.md you can validate and run:
 - **docx-generation**: create, read, and edit operations with invariants,
   roundtrip fixtures, and quality gates.
 
-Run any of them with `node src/cli.js test examples/<name>/` from
-`covenant-framework/`.
+Run any of them with `node packages/cli/src/cli.js test examples/<name>/`, or
+`covenant test examples/<name>/` once the CLI is installed.
 
 ## Specification
 
@@ -96,7 +110,7 @@ source of truth when framework behaviour is ambiguous.
 ## Licensing
 
 - **Specification** (the COVENANT.md format and its prose): [CC-BY-4.0](LICENSE-spec).
-- **Reference framework** (`covenant-framework/`): [MIT](LICENSE).
+- **Reference framework** (`packages/core` and `packages/cli`): [MIT](LICENSE).
 - **The "COVENANT.md" name**: see [TRADEMARK.md](TRADEMARK.md), including the
   conditions for calling a tool "COVENANT.md compliant".
 
@@ -104,4 +118,4 @@ source of truth when framework behaviour is ambiguous.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for build and test instructions and the
 project conventions (no em-dashes, British English, ESM only inside
-`covenant-framework/`).
+`packages/`).

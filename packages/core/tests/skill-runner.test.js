@@ -70,6 +70,8 @@ describe('simulator strategy: output synthesis', () => {
     const pdfPath = path.join(
       __dirname,
       '..',
+      '..',
+      '..',
       'examples',
       'pdf-generation',
       'COVENANT.md'

@@ -6,7 +6,7 @@ import { graphSkills } from '../src/graph.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const fxDir = (name) => path.resolve(__dirname, 'fixtures', name);
-const examplesDir = path.resolve(__dirname, '..', 'examples');
+const examplesDir = path.resolve(__dirname, '..', '..', '..', 'examples');
 
 describe('graph: DOT format', () => {
   test('emits valid DOT for a 2-node 1-edge graph', async () => {

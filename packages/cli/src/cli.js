@@ -2,10 +2,17 @@
 
 import { program } from 'commander';
 
-// Import command modules
-import { validateCovenant as validate } from './validator.js';
-import { CovenantTestRunner } from './test.js';
-import { createSkillRunner } from './skill-runner.js';
+// Core library API. The CLI is a thin wrapper over @covenant-md/core.
+import {
+  validateCovenant as validate,
+  CovenantTestRunner,
+  createSkillRunner,
+  lintCovenant,
+  printFindings,
+  diffCovenants,
+  printDiff,
+  graphSkills,
+} from '@covenant-md/core';
 
 program
   .name('covenant')
@@ -29,7 +36,6 @@ program
       const testRunner = new CovenantTestRunner({ covenantPath, skillRunner });
       const results = await testRunner.run();
 
-      // Existing result-printing block, preserved verbatim from prior cli.js:
       if (results.overall) {
         console.log(`✅ All tests passed! (${results.passedCount}/${results.fixtureCount} fixtures passed, ${results.failedCount} failed, ${results.skippedCount} skipped)`);
       } else {
@@ -60,7 +66,6 @@ program
   .option('--strict', 'Exit non-zero if any warning fires')
   .action(async (skillPath, opts) => {
     try {
-      const { lintCovenant, printFindings } = await import('./lint.js');
       const { code, findings } = await lintCovenant(skillPath, opts);
       printFindings(findings);
       process.exit(code);
@@ -76,7 +81,6 @@ program
   .option('--strict', 'Exit non-zero if breaking detected without major version bump')
   .action(async (oldPath, newPath, opts) => {
     try {
-      const { diffCovenants, printDiff } = await import('./diff.js');
       const { code, sections } = await diffCovenants(oldPath, newPath, opts);
       printDiff(sections);
       process.exit(code);
@@ -92,7 +96,6 @@ program
   .option('--format <fmt>', 'Output format: dot (default) or json', 'dot')
   .action(async (skillsDir, opts) => {
     try {
-      const { graphSkills } = await import('./graph.js');
       const result = await graphSkills(skillsDir, opts);
       if (result.error) {
         process.stderr.write(`${result.error}\n`);

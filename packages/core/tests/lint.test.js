@@ -6,7 +6,7 @@ import { lintCovenant, printFindings } from '../src/lint.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const fx = (name) => path.resolve(__dirname, 'fixtures', name);
-const ex = (name) => path.resolve(__dirname, '..', 'examples', name);
+const ex = (name) => path.resolve(__dirname, '..', '..', '..', 'examples', name);
 
 describe('shallow-deep heuristic', () => {
   test('fires warning when depth=deep and surface.length > 3', async () => {

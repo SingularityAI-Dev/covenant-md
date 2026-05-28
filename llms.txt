@@ -45,7 +45,7 @@ https://github.com/SingularityAI-Dev/covenant-md
 
 ## Licence and attribution
 
-- Reference framework (`covenant-framework/`): MIT.
+- Reference framework (`packages/core` and `packages/cli`): MIT.
 - Specification text (`docs/COVENANT.md`): CC-BY-4.0.
 - The "COVENANT.md" name: see TRADEMARK.md.
 - Repository under the SingularityAI-Dev organisation. Author: Rainier Potgieter.

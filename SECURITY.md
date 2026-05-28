@@ -18,10 +18,10 @@ You can expect an initial response within 72 hours. We will work with you to und
 
 ## Scope
 
-This policy covers the reference framework in `covenant-framework/`:
+This policy covers the reference framework packages:
 
-- The validator, test runner, generator, and CLI (`validate`, `test`, `generate`, `lint`, `diff`, `graph`)
-- The contract-driven skill runner and its `simulator` / `process` strategies
+- `@covenant-md/core`: validator, test runner, skill runner, lint, diff, graph
+- `@covenant-md/cli`: the `covenant` CLI (`validate`, `test`, `generate`, `lint`, `diff`, `graph`) and the interactive generator
 
 The specification text in `docs/COVENANT.md` is prose, not executable code, and is out of scope for vulnerability reports; spec ambiguities should be filed as a spec question issue instead.
 

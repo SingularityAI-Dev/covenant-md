@@ -1,0 +1,44 @@
+{
+  "name": "@covenant-md/cli",
+  "version": "1.0.0",
+  "description": "Command-line interface for COVENANT.md: validate, test, generate, lint, diff, graph",
+  "type": "module",
+  "bin": {
+    "covenant": "./src/cli.js"
+  },
+  "exports": {
+    ".": "./src/cli.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "author": "Rainier Potgieter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SingularityAI-Dev/covenant-md.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/SingularityAI-Dev/covenant-md#readme",
+  "bugs": "https://github.com/SingularityAI-Dev/covenant-md/issues",
+  "keywords": [
+    "covenant",
+    "covenant-md",
+    "cli",
+    "ai",
+    "agent",
+    "skill",
+    "contract"
+  ],
+  "dependencies": {
+    "@covenant-md/core": "^1.0.0",
+    "commander": "^11.0.0",
+    "handlebars": "^4.7.9",
+    "inquirer": "^13.4.2"
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a defect in the covenant-framework, the CLI, or the spec
+about: Report a defect in @covenant-md/core, @covenant-md/cli, or the spec
 title: ""
 labels: bug
 assignees: ""

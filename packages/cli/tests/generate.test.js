@@ -1,6 +1,6 @@
 import { jest, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from '@jest/globals';
 import { SkillGenerator } from '../src/generate.js';
-import { validateCovenant } from '../src/validator.js';
+import { validateCovenant } from '@covenant-md/core';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';

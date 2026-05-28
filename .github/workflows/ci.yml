@@ -13,9 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [20, 22]
-    defaults:
-      run:
-        working-directory: covenant-framework
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -23,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          cache-dependency-path: covenant-framework/package-lock.json
+          cache-dependency-path: package-lock.json
       - run: npm ci
       - run: npm test
       - run: npm run test:fixtures

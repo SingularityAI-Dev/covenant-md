@@ -29,7 +29,7 @@ The primary interface for this skill is defined in COVENANT.md.
 
 ### Basic Usage
 ```javascript
-const { {{skillName}} } = require('covenant-framework');
+const { {{skillName}} } = require('@covenant-md/core');
 
 // Example usage would go here
 ```

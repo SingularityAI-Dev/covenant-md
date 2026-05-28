@@ -7,21 +7,21 @@ framework. This guide covers how to build, test, and submit changes.
 
 - `docs/COVENANT.md`: the canonical specification. The source of truth when
   validator or test-runner behaviour is ambiguous.
-- `covenant-framework/`: the reference framework: validator, test runner,
-  generator, and CLI. All framework code lives here.
-- `covenant-framework/examples/`: example skills exercised as fixtures.
+- `packages/core/` (`@covenant-md/core`): the library: validator, test runner,
+  skill runner, lint, diff, graph.
+- `packages/cli/` (`@covenant-md/cli`): the `covenant` CLI and the generator.
+- `examples/`: example skills exercised as fixtures.
 
 ## Build and test
 
-All framework commands run from `covenant-framework/`:
+All commands run from the repo root (an npm workspaces monorepo):
 
 ```bash
-cd covenant-framework
-npm ci                 # install exact dependencies
-npm test               # Jest suite (run under --experimental-vm-modules)
+npm ci                 # install the workspace
+npm test               # Jest across packages (run under --experimental-vm-modules)
 npm run test:fixtures  # run all four example skills end-to-end through the CLI
-npm run validate -- examples/docx-generation/COVENANT.md
-npm run generate -- my-new-skill
+node packages/cli/src/cli.js validate examples/docx-generation/COVENANT.md
+node packages/cli/src/cli.js generate
 ```
 
 Both `npm test` and `npm run test:fixtures` must pass before you open a pull
@@ -29,7 +29,7 @@ request. CI runs the same two steps on Node 20 and Node 22.
 
 ## Conventions
 
-- **ESM only** inside `covenant-framework/`: use `import` / `export` and include
+- **ESM only** inside `packages/`: use `import` / `export` and include
   the `.js` extension in relative import paths.
 - **No em-dashes** anywhere in prose, code comments, or documentation. Use
   commas, semicolons, colons, or full stops.
@@ -53,7 +53,7 @@ Please do not contribute enterprise or governance tooling here.
 
 ## Licensing of contributions
 
-Contributions to `covenant-framework/` are accepted under the MIT License.
+Contributions to the framework (`packages/`) are accepted under the MIT License.
 Contributions to the specification text are accepted under CC-BY-4.0. By
 opening a pull request you agree to license your contribution under the
 licence that covers the files you change.

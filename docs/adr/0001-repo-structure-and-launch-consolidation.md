@@ -1,8 +1,13 @@
 # ADR 0001: Repository structure and launch consolidation
 
-- Status: Accepted
+- Status: Accepted, superseded in part by P2 (2026-05-27)
 - Date: 2026-05-21
 - Context: open-source launch readiness for `covenant-md`
+
+> Update 2026-05-27: decision 1 (keep the single `covenant-framework/` directory, defer a
+> `packages/` layout) was reversed in P2 once npm publication became the second consumer. The
+> framework now lives as the npm workspaces monorepo `packages/core` (`@covenant-md/core`) and
+> `packages/cli` (`@covenant-md/cli`). The history-preservation and sovereignty decisions stand.
 
 ## Context
 

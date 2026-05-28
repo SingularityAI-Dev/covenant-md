@@ -1,0 +1,42 @@
+{
+  "name": "@covenant-md/core",
+  "version": "1.0.0",
+  "description": "Validator, test runner, skill runner, lint, diff, and graph for the COVENANT.md design-contract spec",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "author": "Rainier Potgieter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SingularityAI-Dev/covenant-md.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/SingularityAI-Dev/covenant-md#readme",
+  "bugs": "https://github.com/SingularityAI-Dev/covenant-md/issues",
+  "keywords": [
+    "covenant",
+    "covenant-md",
+    "ai",
+    "agent",
+    "skill",
+    "contract",
+    "specification"
+  ],
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "semver": "^7.6.0",
+    "yaml": "^2.3.1"
+  }
+}

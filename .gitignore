@@ -4,8 +4,7 @@ node_modules/
 .planning/
 opensrc/
 coverage/
-covenant-framework/coverage/
-covenant-framework/test-input.json
+handover-docs/
 docs/handover-docs/
 docs/marketing/
 docs/editorial/

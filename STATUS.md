@@ -5,7 +5,8 @@
 ## Where we are
 
 COVENANT.md is public at github.com/SingularityAI-Dev/covenant-md: the canonical
-specification (`docs/COVENANT.md`) plus the reference framework (`covenant-framework/`),
+specification (`docs/COVENANT.md`) plus the reference framework (an npm workspaces
+monorepo: `packages/core` as `@covenant-md/core` and `packages/cli` as `@covenant-md/cli`),
 with CI green on Node 20 and 22. The framework ships a validator, a contract-driven test
 runner and skill runner, an interactive generator, and a six-command CLI (`validate`,
 `test`, `generate`, `lint`, `diff`, `graph`). 56 Jest tests pass and four example skills
@@ -13,6 +14,9 @@ pass their fixtures.
 
 ## Recent
 
+- 2026-05-27: P1 governance (CoC, templates, dependabot, CODEOWNERS, validate Action, Biome
+  config) and P2 npm packaging landed. Split into the workspaces monorepo `@covenant-md/core` and
+  `@covenant-md/cli`, examples moved to the repo root, 56 tests and four fixtures green.
 - 2026-05-25: public launch landed. README leading with the binding visual and the five
   questions, MIT licence for the framework and CC-BY-4.0 for the spec, TRADEMARK note,
   CONTRIBUTING guide, GitHub Actions CI. Em-dash sweep across the tree. Node 20+ required.
