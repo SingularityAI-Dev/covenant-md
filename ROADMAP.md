@@ -34,7 +34,7 @@
 
 ## Later
 
-- [ ] Claude Code plugin with `/covenant:` slash commands.
+- [x] Claude Code plugin with `/covenant:` slash commands (`integrations/claude-code/`).
 - [ ] VSCode extension (syntax, snippets, inline validation).
 - [ ] Eval benchmark harness measuring the contract thesis.
 - [ ] Skill marketplace / registry (separate product).

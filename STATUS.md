@@ -14,6 +14,9 @@ pass their fixtures.
 
 ## Recent
 
+- 2026-05-28: P6 Claude Code plugin landed at `integrations/claude-code/`. Five slash commands
+  (`/covenant:validate`, `/covenant:check`, `/covenant:init`, `/covenant:diff`,
+  `/covenant:graph`) orchestrating the `@covenant-md/mcp` tools.
 - 2026-05-28: P5 Python SDK (alpha) landed. `sdks/python/covenant-md`; parser + validator at
   Runtime tier with verdict parity against the shared `spec/fixtures/` (24/24 tests including
   15-fixture parity). Ready for PyPI publish.
