@@ -25,3 +25,4 @@ jobs:
       - run: npm test
       - run: npm run test:fixtures
       - run: npm run test:conformance
+      - run: npm run test:mcp

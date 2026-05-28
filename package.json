@@ -10,6 +10,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:fixtures": "node packages/cli/src/cli.js test examples/markdown-to-html/ && node packages/cli/src/cli.js test examples/pdf-generation/ && node packages/cli/src/cli.js test examples/template-rendering/ && node packages/cli/src/cli.js test examples/docx-generation/",
     "test:conformance": "node spec/fixtures/run-fixtures.mjs",
+    "test:mcp": "node --test packages/mcp/tests/*.test.mjs",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
   },
