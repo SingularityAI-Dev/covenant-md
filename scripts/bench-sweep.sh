@@ -62,5 +62,4 @@ for line in "${STATUS[@]}"; do
 done
 echo ""
 echo "Per-model run.json files are under benchmarks/$SWEEP_DIR/"
-echo "To collate into a single comparison JSON, run:"
-echo "  node -e 'const fs=require(\"fs\"),p=require(\"path\");const d=\"$SWEEP_DIR\";console.log(JSON.stringify(fs.readdirSync(d).filter(x=>fs.statSync(p.join(d,x)).isDirectory()).map(x=>({model:x.replace(/_/g,\"/\"),...JSON.parse(fs.readFileSync(p.join(d,x,\"run.json\")))})),null,2))' > "$SWEEP_DIR/sweep.json"
+echo "Each model's results are at benchmarks/$SWEEP_DIR/<provider>_<slug>/run.json"
