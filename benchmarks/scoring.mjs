@@ -18,10 +18,17 @@ export function parseResponse(text) {
     if (typeof obj !== 'object' || obj === null) {
       return { ok: false, reason: 'parsed value is not an object' };
     }
+    // Accept either `output` (singular) or `outputs` (plural); models that
+    // have seen the COVENANT.md (which uses contracts.outputs) tend to mirror
+    // the plural form, and that is more faithful to the contract, not less.
+    const out =
+      (obj.output && typeof obj.output === 'object' && obj.output) ||
+      (obj.outputs && typeof obj.outputs === 'object' && obj.outputs) ||
+      {};
     return {
       ok: true,
       claimed_operation: typeof obj.operation === 'string' ? obj.operation : null,
-      claimed_output: obj.output && typeof obj.output === 'object' ? obj.output : {},
+      claimed_output: out,
     };
   } catch (e) {
     return { ok: false, reason: `not JSON: ${e.message}` };

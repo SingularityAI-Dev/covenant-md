@@ -1,8 +1,10 @@
 # Published benchmark runs
 
-No published runs yet. The harness in this directory is the v1.0 scaffold; real
-cross-model runs (Claude Sonnet, GPT-4o class, open-weight) are pending API
-credits. When a published run lands, it will live under
-`published/<date>-<label>/` with raw outputs, the scoring function version, and
-an honest analysis, mirroring the pattern in
-[`logic-md/benchmarks/published`](https://github.com/SingularityAI-Dev/logic-md/tree/main/benchmarks/published).
+Each entry below is a real, reproducible run with raw outputs, the scoring
+function version, and an honest analysis. Results are published whether or not
+they support the COVENANT.md contract thesis, matching the disclosure norm of
+the sibling logic-md project.
+
+| Date | Run | Task | Model | Trials | Headline |
+| --- | --- | --- | --- | --- | --- |
+| 2026-05-28 | [sonnet-interface-adherence](2026-05-28-sonnet-interface-adherence/) | interface-adherence | claude-sonnet-4-6 | 10 | No measurable delta on a trivial single-operation task (100/100). Expected on capable frontier models; the bench needs harder tasks or weaker models to expose an effect. |
