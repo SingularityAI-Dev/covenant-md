@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="A skill alone is a folder of prose with an implicit boundary, the caller must read every file to know what is safe to depend on. With a COVENANT.md beside it the boundary is declared, typed, and validatable; the caller depends on the contract, not the internals.">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+      .panel-loose { fill: #161b22; stroke: #6e7681; stroke-width: 1.5; stroke-dasharray: 6 5; }
+      .panel-bound { fill: #161b22; stroke: #d4a857; stroke-width: 2; }
+      .title { fill: #c9d1d9; font: 600 18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
+      .subtitle { fill: #8b949e; font: 400 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .col-title { fill: #c9d1d9; font: 700 16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.06em; }
+      .label { fill: #c9d1d9; font: 700 15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .label-dim { fill: #6e7681; font: 700 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .label-gold { fill: #d4a857; font: 700 15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .tag { fill: #8b949e; font: 600 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.14em; }
+      .muted { fill: #8b949e; font: 400 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .field { fill: #d4a857; font: 600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .red { fill: #e07050; font: 600 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .green { fill: #2db88a; font: 600 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .arrow-fuzzy { stroke: #6e7681; stroke-width: 1.5; stroke-dasharray: 3 4; fill: none; marker-end: url(#arrow-fuzzy); }
+      .arrow-clean { stroke: #d4a857; stroke-width: 2; fill: none; marker-end: url(#arrow-clean); }
+    </style>
+    <marker id="arrow-fuzzy" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#6e7681"/>
+    </marker>
+    <marker id="arrow-clean" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#d4a857"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="520"/>
+
+  <text x="600" y="40" text-anchor="middle" class="title">THE PROBLEM, AND WHAT THE CONTRACT FIXES</text>
+  <text x="600" y="62" text-anchor="middle" class="subtitle">prose alone vs prose with a declared boundary</text>
+
+  <g transform="translate(70,100)">
+    <text x="0" y="0" class="col-title">A. SKILL.md ALONE</text>
+    <text x="0" y="22" class="muted">implicit boundary, every caller has to read the folder</text>
+
+    <g transform="translate(0,46)">
+      <path d="M10,40 L60,40 L80,20 L500,20 L500,340 L10,340 Z" class="panel-loose" stroke-linejoin="round"/>
+      <text x="100" y="50" class="tag">SKILL FOLDER (FUZZY BOUNDARY)</text>
+      <g transform="translate(40,80)">
+        <rect class="panel" width="420" height="220" rx="6"/>
+        <text x="16" y="24" class="label-dim">SKILL.md</text>
+        <text x="16" y="48" class="muted">## Operations</text>
+        <text x="16" y="68" class="muted">render, transform, validate? maybe save?</text>
+        <text x="16" y="92" class="muted">## Usage</text>
+        <text x="16" y="112" class="muted">prose example, parameters inferred</text>
+        <text x="16" y="136" class="muted">## Notes</text>
+        <text x="16" y="156" class="muted">caveats and undocumented behaviour</text>
+        <text x="16" y="188" class="red">? what does it accept?</text>
+        <text x="16" y="206" class="red">? what does it return?</text>
+      </g>
+    </g>
+
+    <g transform="translate(0,420)">
+      <rect class="panel" width="500" height="60" rx="8"/>
+      <text x="16" y="26" class="tag">CALLER</text>
+      <text x="16" y="48" class="muted">must read every file to know what is safe to depend on</text>
+    </g>
+  </g>
+
+  <path d="M345,470 Q 240,420 240,360" class="arrow-fuzzy"/>
+
+  <g transform="translate(640,100)">
+    <text x="0" y="0" class="col-title">B. SKILL.md + COVENANT.md</text>
+    <text x="0" y="22" class="muted">declared boundary, typed, validatable, signable</text>
+
+    <g transform="translate(0,46)">
+      <path d="M10,40 L60,40 L80,20 L500,20 L500,340 L10,340 Z" class="panel-bound" stroke-linejoin="round"/>
+      <text x="100" y="50" class="tag" fill="#d4a857">SKILL FOLDER (BOUND)</text>
+
+      <g transform="translate(40,80)">
+        <rect class="panel" width="200" height="220" rx="6" opacity="0.6"/>
+        <text x="14" y="24" class="label-dim">SKILL.md</text>
+        <text x="14" y="48" class="muted">implementation</text>
+        <text x="14" y="66" class="muted">steps · scripts</text>
+        <text x="14" y="84" class="muted">internal</text>
+      </g>
+
+      <g transform="translate(260,80)">
+        <rect class="panel-bound" width="200" height="220" rx="6"/>
+        <text x="14" y="24" class="label-gold">COVENANT.md</text>
+        <text x="14" y="52" class="field">domain</text>
+        <text x="14" y="74" class="field">interface</text>
+        <text x="14" y="96" class="field">dependencies</text>
+        <text x="14" y="118" class="field">contracts</text>
+        <text x="14" y="140" class="field">quality</text>
+        <line x1="14" y1="156" x2="186" y2="156" stroke="#d4a857" stroke-width="1" opacity="0.5"/>
+        <text x="14" y="180" class="green">✓ typed inputs / outputs</text>
+        <text x="14" y="200" class="green">✓ fixtures prove the shape</text>
+      </g>
+    </g>
+
+    <g transform="translate(0,420)">
+      <rect class="panel" width="500" height="60" rx="8"/>
+      <text x="16" y="26" class="tag" fill="#d4a857">CALLER</text>
+      <text x="16" y="48" class="muted">depends on the covenant, not on reading the folder</text>
+    </g>
+  </g>
+
+  <path d="M970,470 Q 870,420 870,360" class="arrow-clean"/>
+</svg>

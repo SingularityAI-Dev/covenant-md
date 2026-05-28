@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540" role="img" aria-label="COVENANT.md is the design-contract layer beside SKILL.md inside an agent skill folder. Callers depend on the declared boundary, not on the skill's internals.">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .panel { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+      .panel-core { fill: #161b22; stroke: #d4a857; stroke-width: 2; }
+      .folder { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+      .title { fill: #c9d1d9; font: 600 18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
+      .subtitle { fill: #8b949e; font: 400 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .label { fill: #c9d1d9; font: 700 16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.03em; }
+      .label-gold { fill: #d4a857; font: 700 22px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.04em; }
+      .label-dim { fill: #6e7681; font: 700 16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.03em; }
+      .tag { fill: #8b949e; font: 600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.14em; }
+      .muted { fill: #8b949e; font: 400 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .pill { fill: #1f2530; stroke: #d4a857; stroke-width: 1.2; }
+      .pill-text { fill: #d4a857; font: 600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing: 0.06em; }
+      .arrow { stroke: #d4a857; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-faint { stroke: #30363d; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+    </style>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4a857" stop-opacity="0.40"/>
+      <stop offset="70%" stop-color="#d4a857" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#d4a857" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#d4a857"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="540"/>
+
+  <text x="600" y="40" text-anchor="middle" class="title">COVENANT.md · THE CONTRACT LAYER FOR AGENT SKILLS</text>
+  <text x="600" y="62" text-anchor="middle" class="subtitle">declared · validatable · framework-agnostic</text>
+
+  <g transform="translate(80,120)">
+    <rect class="panel" width="280" height="84" rx="10"/>
+    <text x="20" y="24" class="tag">CALLER</text>
+    <text x="20" y="56" class="label">CLAUDE.md / agent / skill</text>
+    <text x="20" y="76" class="muted">depends on the boundary</text>
+  </g>
+
+  <g transform="translate(440,110)">
+    <ellipse cx="320" cy="160" rx="380" ry="200" fill="url(#glow)">
+      <animate attributeName="opacity" values="0.35;0.85;0.35" dur="3.6s" repeatCount="indefinite"/>
+    </ellipse>
+
+    <path d="M0,40 L40,40 L60,20 L640,20 L640,300 L0,300 Z" class="folder" stroke-linejoin="round"/>
+    <text x="80" y="50" class="tag">SKILL FOLDER</text>
+
+    <g transform="translate(40,80)">
+      <rect class="panel" width="260" height="180" rx="8"/>
+      <text x="16" y="24" class="tag">IMPLEMENTATION (PRIVATE)</text>
+      <text x="16" y="60" class="label-dim">SKILL.md</text>
+      <text x="16" y="84" class="muted">the procedural how</text>
+      <text x="16" y="104" class="muted">steps · scripts · prose</text>
+      <text x="16" y="124" class="muted">internals subject to change</text>
+      <line x1="16" y1="142" x2="244" y2="142" stroke="#30363d" stroke-width="1"/>
+      <text x="16" y="162" class="muted" font-style="italic">"how to do it"</text>
+    </g>
+
+    <g transform="translate(340,80)">
+      <rect class="panel-core" width="260" height="180" rx="8"/>
+      <text x="16" y="24" class="tag" fill="#d4a857">CONTRACT (PUBLIC)</text>
+      <text x="16" y="58" class="label-gold">COVENANT.md</text>
+      <text x="16" y="84" class="muted">domain · interface</text>
+      <text x="16" y="104" class="muted">dependencies · contracts</text>
+      <text x="16" y="124" class="muted">quality fixtures</text>
+      <line x1="16" y1="142" x2="244" y2="142" stroke="#d4a857" stroke-width="1" opacity="0.6"/>
+      <text x="16" y="162" class="muted" font-style="italic">"what it promises"</text>
+    </g>
+  </g>
+
+  <path d="M360,150 Q 580,140 770,180" class="arrow"/>
+  <text x="555" y="138" text-anchor="middle" class="pill-text">reads the boundary</text>
+
+  <path d="M360,180 Q 500,260 580,250" class="arrow-faint"/>
+  <text x="430" y="290" text-anchor="middle" class="muted" font-style="italic">internals stay private</text>
+
+  <g transform="translate(80,420)">
+    <text x="0" y="0" class="tag">THE FIVE QUESTIONS</text>
+    <g transform="translate(0,18)">
+      <rect class="pill" x="0" y="0" width="190" height="34" rx="17"/>
+      <text x="95" y="22" text-anchor="middle" class="pill-text">DOMAIN · who are you?</text>
+    </g>
+    <g transform="translate(204,18)">
+      <rect class="pill" x="0" y="0" width="220" height="34" rx="17"/>
+      <text x="110" y="22" text-anchor="middle" class="pill-text">INTERFACE · what do you expose?</text>
+    </g>
+    <g transform="translate(438,18)">
+      <rect class="pill" x="0" y="0" width="225" height="34" rx="17"/>
+      <text x="112" y="22" text-anchor="middle" class="pill-text">DEPENDENCIES · what do you need?</text>
+    </g>
+    <g transform="translate(677,18)">
+      <rect class="pill" x="0" y="0" width="225" height="34" rx="17"/>
+      <text x="112" y="22" text-anchor="middle" class="pill-text">CONTRACTS · what do you promise?</text>
+    </g>
+    <g transform="translate(916,18)">
+      <rect class="pill" x="0" y="0" width="200" height="34" rx="17"/>
+      <text x="100" y="22" text-anchor="middle" class="pill-text">QUALITY · how do you prove it?</text>
+    </g>
+  </g>
+</svg>

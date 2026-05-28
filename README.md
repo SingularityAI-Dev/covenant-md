@@ -14,7 +14,9 @@ single line of implementation is written.
 [![CI](https://github.com/SingularityAI-Dev/covenant-md/actions/workflows/ci.yml/badge.svg)](https://github.com/SingularityAI-Dev/covenant-md/actions/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/tests-56%20passing-brightgreen)](https://github.com/SingularityAI-Dev/covenant-md/actions)
 
-![A skill bound by its covenant](docs/assets/covenant-md-binding.png)
+<p align="center">
+  <img src="docs/assets/covenant-md-skill-layers.svg" alt="COVENANT.md is the design-contract layer beside SKILL.md inside an agent skill folder. Callers depend on the declared boundary, not on the skill's internals." width="100%"/>
+</p>
 
 Developed as the sibling of [LOGIC.md](https://github.com/SingularityAI-Dev/logic-md):
 LOGIC.md describes the *flow* between steps; COVENANT.md describes the *contract*
@@ -37,6 +39,10 @@ This is not a documentation problem. It is a missing-contract problem.
 
 **COVENANT.md fills that gap.** A covenant beside `SKILL.md` declares what the
 skill is on five axes and lets a validator and a test runner enforce it.
+
+<p align="center">
+  <img src="docs/assets/opaque-vs-bound.svg" alt="On the left, a SKILL.md folder with a fuzzy implicit boundary: the caller must read every file to know what is safe to depend on. On the right, the same folder with a COVENANT.md beside SKILL.md, the boundary now declared and typed; the caller depends on the contract, not the internals." width="100%"/>
+</p>
 
 ---
 
@@ -95,6 +101,10 @@ Every COVENANT.md answers five questions about a skill:
 - **Quality: how do you prove it?** Fixtures and gates that demonstrate the
   skill meets its contracts, runnable by a validator.
 
+<p align="center">
+  <img src="docs/assets/five-questions.svg" alt="The five sections of a COVENANT.md (domain, interface, dependencies, contracts, quality) shown as a row of cards, with the Skill (producer) and the Consumer (caller) signing the same agreement at the bottom: a two-party binding." width="100%"/>
+</p>
+
 ---
 
 ## How it relates to SKILL.md and LOGIC.md
@@ -120,6 +130,10 @@ to trust. It is a party to an agreement. State your domain, expose a narrow
 interface, declare your dependencies, promise typed contracts, and prove them
 with fixtures. That is the shift: **skills as contracts.** #SkillsAsContracts
 
+<p align="center">
+  <img src="docs/assets/covenant-md-binding.png" alt="A wax-sealed parchment binding two parties: the Skill (producer) covenants to deliver every declared operation; the Consumer (caller) covenants to call only what is exposed and honour the contracts as written." width="80%"/>
+</p>
+
 ---
 
 ## When to use COVENANT.md, and when not to
@@ -144,6 +158,74 @@ with fixtures. That is the shift: **skills as contracts.** #SkillsAsContracts
 COVENANT.md does **not** make model outputs better. It makes the skill's surface
 explicit, validatable, and testable, so callers depend on a declared boundary
 rather than on reading the skill's internals.
+
+---
+
+## Research and background
+
+COVENANT.md is a deliberate response to two recent talks that name the problem
+from opposite sides. Both transcripts ship in this repo under
+[`docs/`](docs/) so anyone can read the primary source.
+
+### Anthropic on *Agent Skills: A New Paradigm for AI Agents*
+
+Barry and Mahesh's talk introduces Agent Skills as organised folders of files
+that package composable procedural knowledge for agents. Their stated roadmap
+for where skills are heading is exactly the gap COVENANT.md closes:
+
+> Testing & evaluation: formal testing and evaluation pipelines to verify
+> skills load at the right time and produce quality output.
+>
+> Versioning: clear lineage tracking as skills evolve and agent behaviour
+> changes.
+>
+> Skill dependencies: skills that can explicitly declare dependencies on other
+> skills, MCP servers, or packages, improving predictability across runtime
+> environments.
+>
+> Sharing & distribution: better distribution and marketplace-style sharing so
+> skills built anywhere benefit agents everywhere.
+
+`quality.fixtures` is the testing pipeline. `version` plus `interface.breaking_changes`
+is the versioning lineage. `dependencies.skills / mcp_servers / packages /
+environment` is the dependency declaration. `domain` plus a kebab-case `name` is
+the marketplace handle.
+
+Source: [`docs/Agent_Skills_Key_Takeaways.docx`](docs/Agent_Skills_Key_Takeaways.docx).
+
+### Matt Pocock (aihero.dev) on *Software Fundamentals in the Age of AI*
+
+Pocock's argument is that AI thrives in well-structured codebases and breaks in
+poor ones, so software fundamentals matter more now, not less. Three of his
+named primitives are baked directly into COVENANT.md:
+
+- **Ubiquitous Language** (from Eric Evans' Domain-Driven Design): a curated
+  glossary of agreed terms derived from the domain model. In a covenant, this
+  lives in `domain.ubiquitous_language`, either inline or as a separate file.
+- **Deep modules** (from John Ousterhout's *A Philosophy of Software Design*):
+  prefer relatively few, large units with simple interfaces that hide internal
+  complexity. In a covenant, this is the `domain.depth` field, declared as
+  `deep` or `shallow`, with the validator's heuristic that a `deep` skill
+  should expose three or fewer operations.
+- **Design the interface; delegate the implementation.** This is the entire
+  separation that COVENANT.md formalises beside SKILL.md: the covenant is the
+  public, validatable contract; SKILL.md is the procedural implementation that
+  the contract no longer forces you to read in full.
+
+Pocock closes by quoting Kent Beck: *invest in the design of the system every
+day*. A skill that publishes a covenant is doing exactly that, every time it
+changes.
+
+Source: [`docs/Software_Fundamentals_in_AI_Age.docx`](docs/Software_Fundamentals_in_AI_Age.docx).
+
+### Where the two converge
+
+Anthropic names what skills are missing at the ecosystem layer (test pipelines,
+versioning, dependency declaration, distribution). Pocock names what skills are
+missing at the design layer (ubiquitous language, deep modules, declared
+interfaces). COVENANT.md is one file that addresses both: a declared,
+validatable, versioned, testable, dependency-aware contract beside the skill
+that owns the implementation.
 
 ---
 
