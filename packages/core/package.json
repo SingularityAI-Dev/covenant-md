@@ -20,7 +20,7 @@
   "author": "Rainier Potgieter",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SingularityAI-Dev/covenant-md.git",
+    "url": "git+https://github.com/SingularityAI-Dev/covenant-md.git",
     "directory": "packages/core"
   },
   "homepage": "https://github.com/SingularityAI-Dev/covenant-md#readme",
