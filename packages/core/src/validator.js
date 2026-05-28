@@ -120,11 +120,22 @@ function validateFieldFormats(data, result) {
     }
   }
   
-  // Validate covenant_version
+  // Validate covenant_version (spec §Versioning)
+  // - Recognised major (1.x), known minor: validate.
+  // - Recognised major (1.x), newer minor: validate; warn that unknown fields will be ignored.
+  // - Unrecognised major (anything not 1.x): MUST reject.
   if (data.covenant_version) {
-    // Currently only "1.0" is supported
-    if (data.covenant_version !== '1.0') {
-      result.warnings.push(`Unsupported covenant_version: ${data.covenant_version}. Only "1.0" is currently supported.`);
+    const m = String(data.covenant_version).match(/^(\d+)\.(\d+)$/);
+    if (!m) {
+      result.errors.push(`Invalid covenant_version: "${data.covenant_version}". Expected the form "<major>.<minor>".`);
+    } else {
+      const major = parseInt(m[1], 10);
+      const minor = parseInt(m[2], 10);
+      if (major !== 1) {
+        result.errors.push(`Unrecognised covenant_version major: "${data.covenant_version}". This validator supports major 1.x; got ${major}.x.`);
+      } else if (minor > 0) {
+        result.warnings.push(`covenant_version ${data.covenant_version} is newer than this validator's known minor (1.0); unknown fields under known sections will be ignored.`);
+      }
     }
   }
   

@@ -24,3 +24,4 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run test:fixtures
+      - run: npm run test:conformance

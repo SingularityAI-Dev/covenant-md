@@ -1,27 +1,44 @@
 # Roadmap
 
-> Last updated: 2026-05-14
+> Last updated: 2026-05-27
 >
 > v1.0 MVP shipped. Detailed milestone plans live in `.planning/`. This file is the public-facing summary.
 
-## Now (Active)
+## Shipped (v1.0)
 
-- [ ] Review and merge `chore/covenant-editorial-pass-1` (three-pass editorial revision of `docs/COVENANT.md`; framework code untouched, 56 tests pass)
+- [x] `docs/COVENANT.md`: canonical specification (CC-BY-4.0).
+- [x] `@covenant-md/core` and `@covenant-md/cli` on npm, with bin `covenant`.
+- [x] Six-command CLI: `validate`, `test`, `generate`, `lint`, `diff`, `graph`.
+- [x] Four worked example skills exercised as fixtures.
+- [x] **PUB-01**: published to npm under `@covenant-md/*` scope.
+- [x] **VALIDATOR-VERSIONING**: validator rejects unrecognised major
+  `covenant_version` per spec §Versioning; unknown fields under known sections
+  are ignored.
+- [x] **F-08**: canonical `spec/schema.json` (JSON Schema draft 2020-12) plus
+  conformance fixtures and parser/runtime/full tiers; `IMPLEMENTER-GUIDE.md`.
+- [x] Repo governance: SECURITY, CODE_OF_CONDUCT, issue and PR templates,
+  CODEOWNERS, dependabot, the reusable `covenant-validate` GitHub Action, Biome.
+- [x] CI on Node 20 and 22; conformance fixtures run on every push.
 
 ## Next (v1.1 candidates)
 
-- [ ] **SPEC-01**: Extend COVENANT.md spec with `pattern` / `endsWith` on string contracts. The docx-generation `invalid-output-path` fixture was dropped at public launch because v1.0 cannot express the constraint; reinstate it once this lands.
-- [ ] **VALIDATOR-VERSIONING**: Bring `validator.js` `covenant_version` handling into line with spec §Versioning. v1.0 validator warns on unrecognised versions; spec now says MUST reject unrecognised majors and MUST ignore unknown fields under known sections.
-- [ ] **DOC-01**: Documentation site generated from spec + examples
-- [ ] **PUB-01**: Publish framework to npm with `bin: covenant`
-- [ ] **MCP-01**: `covenant doctor` command for live MCP server availability checks
+- [ ] **SPEC-01**: extend the spec with `pattern`, `format`, or `endsWith` on
+  string contracts. The docx-generation `invalid-output-path` fixture was
+  dropped at public launch because v1.0 cannot express the constraint;
+  reinstate it once this lands.
+- [ ] **MCP-01**: `@covenant-md/mcp` server exposing validate, test, lint, diff,
+  graph, generate, and list_templates as MCP tools over stdio (and HTTP).
+- [ ] **PORT-01**: Python SDK on PyPI as `covenant-md`. Parser and validator
+  conformance-tested against the same `spec/fixtures/` as the JS core.
+- [ ] **DOC-01**: documentation site generated from the spec and examples.
 
 ## Later
 
-- [ ] **PORT-01**: Python port of validator (read-only conformance against same fixtures)
-- [ ] **F-08**: Quick-reference field index (deferred Pass 1 finding; ideally landed alongside a JSON schema export)
-- [ ] Skill marketplace / registry (separate product)
-- [ ] Full LOGIC.md runtime integration (separate repo)
-- [ ] Changelog generation from `covenant diff` output
-- [ ] Deprecation warnings propagated to consumers via `stability: deprecated`
-- [ ] Shared domain-language merging across skills in a library
+- [ ] Claude Code plugin with `/covenant:` slash commands.
+- [ ] VSCode extension (syntax, snippets, inline validation).
+- [ ] Eval benchmark harness measuring the contract thesis.
+- [ ] Skill marketplace / registry (separate product).
+- [ ] Full LOGIC.md runtime integration (separate repo).
+- [ ] Changelog generation from `covenant diff` output.
+- [ ] Deprecation warnings propagated to consumers via `stability: deprecated`.
+- [ ] Shared domain-language merging across skills in a library.
