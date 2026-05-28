@@ -233,16 +233,17 @@ tiers (parser, runtime, full) are landing in v1.1 (see the roadmap below).
 
 - [`@covenant-md/core`](https://www.npmjs.com/package/@covenant-md/core) on npm
 - [`@covenant-md/cli`](https://www.npmjs.com/package/@covenant-md/cli) on npm
+- [`@covenant-md/mcp`](https://www.npmjs.com/package/@covenant-md/mcp) on npm (MCP server, six tools over stdio)
+- [`covenant-md`](https://pypi.org/project/covenant-md/) on PyPI (Python SDK, alpha; parser + validator with verdict parity against the shared `spec/fixtures/`)
+- Canonical [`spec/schema.json`](spec/schema.json) plus 15 conformance fixtures and three conformance tiers; see [`docs/IMPLEMENTER-GUIDE.md`](docs/IMPLEMENTER-GUIDE.md)
 - Reusable [GitHub Action](.github/actions/covenant-validate/action.yml) for CI
 - Four worked example skills, validated end-to-end
 
 ### On the roadmap
 
-- `spec/schema.json` + conformance fixtures + parser/runtime/full tiers
-- `@covenant-md/mcp` MCP server exposing the CLI commands as tools
-- Python SDK on PyPI (`covenant-md`), with conformance parity against the same fixtures
 - Claude Code plugin with `/covenant:` slash commands
-- VSCode extension and an evaluation benchmark harness
+- VSCode extension
+- Evaluation benchmark harness
 
 See [`ROADMAP.md`](ROADMAP.md) for the full arc.
 

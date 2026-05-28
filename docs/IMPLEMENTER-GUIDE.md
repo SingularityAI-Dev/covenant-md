@@ -85,7 +85,7 @@ implementation, write an equivalent runner that calls your validator on each
 | Language | Package | Conformance |
 | --- | --- | --- |
 | JavaScript (TypeScript-compatible) | `@covenant-md/core` | Full |
-| Python | `covenant-md` (alpha, coming in v1.1) | Parser to Runtime |
+| Python | [`covenant-md`](https://pypi.org/project/covenant-md/) (alpha) | Runtime (verdict parity against `spec/fixtures/`) |
 
 If you build a COVENANT.md implementation in another language, open a pull
 request adding it to this table along with a link to your conformance run.

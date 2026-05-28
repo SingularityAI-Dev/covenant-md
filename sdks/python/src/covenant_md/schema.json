@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SingularityAI-Dev/covenant-md/spec/schema.json",
+  "title": "COVENANT.md frontmatter",
+  "description": "Canonical JSON Schema for the YAML frontmatter of a COVENANT.md file (spec v1.0). See docs/COVENANT.md for the prose specification, which is the source of truth where this schema is silent.",
+  "type": "object",
+  "required": ["covenant_version", "name"],
+  "additionalProperties": true,
+  "properties": {
+    "covenant_version": {
+      "type": "string",
+      "description": "Spec version this file conforms to (e.g. \"1.0\"). Conformant validators MUST reject unrecognised major versions.",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Machine-readable identifier. MUST be kebab-case (lowercase letters, digits, and hyphens).",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "description": "Skill's own version. MUST be valid semver if present.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+].+)?$"
+    },
+    "stability": {
+      "type": "string",
+      "enum": ["stable", "experimental", "deprecated"]
+    },
+    "domain": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "purpose": { "type": "string" },
+        "depth": { "type": "string", "enum": ["deep", "shallow"] },
+        "ubiquitous_language": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "inline": { "type": ["object", "null"] },
+            "file": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "entry_point": { "type": "string" },
+        "surface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string" },
+              "accepts": { "type": "array", "items": { "type": "string" } },
+              "returns": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "breaking_changes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": "string" },
+              "covenant": { "type": "string" }
+            }
+          }
+        },
+        "mcp_servers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string" },
+              "url": { "type": "string" },
+              "required": { "type": "boolean" },
+              "fallback": { "type": "string" }
+            }
+          }
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "ecosystem"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": "string" },
+              "ecosystem": { "type": "string", "enum": ["npm", "pip", "gem", "cargo", "go"] }
+            }
+          }
+        },
+        "environment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "type": "string" },
+              "constraint": { "type": "string" },
+              "required": { "type": "boolean" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "runner": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "strategy": { "type": "string", "enum": ["simulator", "process"] },
+        "command": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "inputs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["type"],
+            "additionalProperties": true,
+            "properties": {
+              "type": { "type": "string" },
+              "required": { "type": "boolean" },
+              "description": { "type": "string" },
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "outputs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "type": { "type": "string" },
+              "description": { "type": "string" },
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "invariants": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "fixtures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["operation"],
+            "additionalProperties": true,
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "operation": { "type": "string" },
+              "input": { "type": "object" },
+              "expect": { "type": "object" },
+              "depends_on": { "type": ["string", "array"] }
+            }
+          }
+        },
+        "gates": { "type": "array" }
+      }
+    }
+  }
+}

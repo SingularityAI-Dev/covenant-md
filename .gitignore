@@ -11,3 +11,14 @@ docs/editorial/
 docs/superpowers/
 .claude/scheduled_tasks.lock
 .claude/settings.local.json
+
+# Python (sdks/python)
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+sdks/python/build/
+sdks/python/dist/
+sdks/python/covenant_md-*/

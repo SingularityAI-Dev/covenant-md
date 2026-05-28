@@ -26,10 +26,10 @@
   string contracts. The docx-generation `invalid-output-path` fixture was
   dropped at public launch because v1.0 cannot express the constraint;
   reinstate it once this lands.
-- [ ] **MCP-01**: `@covenant-md/mcp` server exposing validate, test, lint, diff,
-  graph, generate, and list_templates as MCP tools over stdio (and HTTP).
-- [ ] **PORT-01**: Python SDK on PyPI as `covenant-md`. Parser and validator
-  conformance-tested against the same `spec/fixtures/` as the JS core.
+- [x] **MCP-01**: `@covenant-md/mcp` server exposing validate, test, lint, diff,
+  graph, and list_templates as MCP tools over stdio.
+- [x] **PORT-01**: Python SDK on PyPI as `covenant-md` (alpha). Parser and
+  validator conformance-tested against the same `spec/fixtures/` as the JS core.
 - [ ] **DOC-01**: documentation site generated from the spec and examples.
 
 ## Later

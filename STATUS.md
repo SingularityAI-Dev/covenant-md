@@ -14,6 +14,15 @@ pass their fixtures.
 
 ## Recent
 
+- 2026-05-28: P5 Python SDK (alpha) landed. `sdks/python/covenant-md`; parser + validator at
+  Runtime tier with verdict parity against the shared `spec/fixtures/` (24/24 tests including
+  15-fixture parity). Ready for PyPI publish.
+- 2026-05-28: P4 `@covenant-md/mcp` MCP server published to npm. Six tools (`covenant_validate`,
+  `covenant_test`, `covenant_lint`, `covenant_diff`, `covenant_graph`, `covenant_list_templates`)
+  over stdio.
+- 2026-05-28: P3 spec conformance landed. `spec/schema.json` (JSON Schema 2020-12), 15 fixtures
+  across valid/invalid/edge-cases, `run-fixtures.mjs`, three conformance tiers, IMPLEMENTER-GUIDE.
+  VALIDATOR-VERSIONING fix.
 - 2026-05-27: P1 governance (CoC, templates, dependabot, CODEOWNERS, validate Action, Biome
   config) and P2 npm packaging landed. Split into the workspaces monorepo `@covenant-md/core` and
   `@covenant-md/cli`, examples moved to the repo root, 56 tests and four fixtures green.
