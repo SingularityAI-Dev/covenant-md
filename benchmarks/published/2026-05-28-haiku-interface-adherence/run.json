@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "task": "interface-adherence",
+    "adapter": "anthropic",
+    "trials": 10,
+    "temperature": 0.2,
+    "timestamp": "2026-05-28T10:18:49.372Z"
+  },
+  "A": {
+    "n": 10,
+    "parse_failure": 0,
+    "interface_adherence": 1,
+    "output_fidelity": 1,
+    "no_undeclared_side_effects": 1
+  },
+  "B": {
+    "n": 10,
+    "parse_failure": 0,
+    "interface_adherence": 1,
+    "output_fidelity": 1,
+    "no_undeclared_side_effects": 1
+  },
+  "delta": {
+    "interface_adherence": 0,
+    "output_fidelity": 0,
+    "no_undeclared_side_effects": 0
+  },
+  "trials_A": [
+    {
+      "trial": 0,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 1,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 2,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 3,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 4,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 5,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 6,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 7,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 8,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 9,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    }
+  ],
+  "trials_B": [
+    {
+      "trial": 0,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 1,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 2,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 3,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 4,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 5,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 6,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 7,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 8,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    },
+    {
+      "trial": 9,
+      "response": "```json\n{\n  \"operation\": \"render\",\n  \"input\": {\n    \"content\": {\n      \"title\": \"Hello\"\n    }\n  },\n  \"output\": {\n    \"success\": true\n  }\n}\n```",
+      "parsed": {
+        "ok": true,
+        "claimed_operation": "render",
+        "claimed_output": {
+          "success": true
+        }
+      },
+      "scores": {
+        "parse_failure": 0,
+        "interface_adherence": 1,
+        "output_fidelity": 1,
+        "no_undeclared_side_effects": 1
+      }
+    }
+  ]
+}
