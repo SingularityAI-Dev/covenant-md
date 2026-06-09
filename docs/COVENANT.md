@@ -261,7 +261,7 @@ domain:
     file: null  # set to "./lang/domain.md" to use a separate file
 ```
 
-**`domain.purpose`**: one to three sentences. The only thing this skill exists to do. If you cannot state it in three sentences, the skill is probably doing too much. This is the contract's opening declaration: the skill is committing to this scope and nothing outside it.
+**`domain.purpose`**: one to three sentences. The only thing this skill exists to do. If you cannot state it in three sentences, the skill is probably doing too much. Name the consumer or domain context, not just the operation. This is the contract's opening declaration: the skill is committing to this scope, this consumer, and nothing outside it.
 
 **`domain.depth`**: borrowed directly from John Ousterhout's *A Philosophy of Software Design*. Declare `deep` if this skill hides significant complexity behind a minimal interface. Declare `shallow` if the interface closely mirrors the implementation. Validators can flag shallow skills as candidates for refactoring. The declaration itself creates accountability: the author must honestly evaluate their own design.
 
@@ -321,7 +321,7 @@ interface:
 
 Each operation declares:
 - `name`: the verb. Operations SHOULD be named with clear action verbs.
-- `description`: what the operation does in one to two sentences.
+- `description`: what the operation does in one to two sentences; name who the outputs serve when they are consumer-specific.
 - `accepts`: which contract input fields this operation uses. References field names from `contracts.inputs`.
 - `returns`: which contract output fields this operation produces. References field names from `contracts.outputs`.
 
@@ -469,7 +469,7 @@ contracts:
 - `description`: what this field means in the domain's ubiquitous language. References to terms defined in `domain.ubiquitous_language` SHOULD appear here.
 - `schema`: optional nested schema for `object` and `array` types.
 
-**`contracts.outputs`**: every field that any surface operation can return. Same structure as inputs. The union of outputs across all operations is declared here; individual operations declare which subset they return via `interface.surface[n].returns`.
+**`contracts.outputs`**: every field that any surface operation can return. Same structure as inputs. The union of outputs across all operations is declared here; individual operations declare which subset they return via `interface.surface[n].returns`. Output `description` fields should name what the value means to the consumer, not just its structural type. Two outputs with the same type signature may serve entirely different professional or domain contexts; that distinction belongs in the description.
 
 **`contracts.side_effects`**: an explicit list of every observable effect this skill has on the world beyond returning output values. Files written. State mutated. External services called. If the side effect list is long, the skill is probably doing too much. If a side effect is absent from this list, it is a bug in the covenant, not just in the skill.
 
