@@ -35,7 +35,7 @@
     "specification"
   ],
   "dependencies": {
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.2.0",
     "semver": "^7.6.0",
     "yaml": "^2.3.1"
   }
