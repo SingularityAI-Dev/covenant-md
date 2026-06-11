@@ -71,6 +71,10 @@ class CovenantTestRunner {
       
       // Extract skill name from parsed data
       const skillName = parsed.name || 'unknown';
+
+      // Keep the declared output contract around so strict_output fixtures
+      // can detect undeclared fields in actual output.
+      this.contractsOutputs = parsed.contracts && parsed.contracts.outputs ? parsed.contracts.outputs : null;
       
       // Extract fixtures from quality.fixtures
       const fixturesData = parsed.quality && parsed.quality.fixtures ? parsed.quality.fixtures : [];
@@ -88,7 +92,8 @@ class CovenantTestRunner {
           input: fixture.input || {},
           depends_on: Array.isArray(fixture.depends_on) ? fixture.depends_on : 
                      typeof fixture.depends_on === 'string' ? [fixture.depends_on] : [],
-          retry: fixture.retry || 0,
+          retry: fixture.retry ?? 0,
+          strict_output: fixture.strict_output === true,
           expected_outcome: fixture.expect_failure ? 'fail' : 'pass',
           description: fixture.description,
           expect: fixture.expect,
@@ -126,7 +131,7 @@ class CovenantTestRunner {
         }
         // Set defaults
         fixture.depends_on = fixture.depends_on || [];
-        fixture.retry = fixture.retry || 0;
+        fixture.retry = fixture.retry ?? 0;
         fixture.expected_outcome = fixture.expected_outcome || 'pass';
         fixtures.push(fixture);
       } catch (parseError) {
@@ -216,8 +221,9 @@ class CovenantTestRunner {
           const dependencies = fixture.depends_on || [];
           for (const dep of dependencies) {
             if (!nameToFixture.has(dep)) {
-              // Ignore dependencies that are not in the fixture list
-              continue;
+              // Fail loudly, same posture as the cycle-detected throw below.
+              // A typo in depends_on must not silently become "no dependency".
+              throw new Error(`fixture "${nodeName}" depends on unknown fixture "${dep}": depends_on must reference a fixture by name`);
             }
             if (!visited.has(dep)) {
               if (hasCycle(dep)) {
@@ -290,17 +296,28 @@ class CovenantTestRunner {
    */
   partialEqual(actual, expected) {
     if (actual == null || expected == null) return actual === expected;
-    
-    if (typeof actual !== 'object' || typeof expected !== 'object') 
+
+    if (typeof actual !== 'object' || typeof expected !== 'object')
       return actual === expected;
-    
+
     const expectedKeys = Object.keys(expected);
-    
+
     for (let key of expectedKeys) {
       if (!actual.hasOwnProperty(key)) return false;
-      if (!this.deepEqual(actual[key], expected[key])) return false;
+      const expectedValue = expected[key];
+      // Nested plain objects match partially at every level (and pick up
+      // comparison-operator support via validateOutput). Arrays and
+      // primitives still require exact equality.
+      if (
+        expectedValue !== null && typeof expectedValue === 'object' && !Array.isArray(expectedValue) &&
+        actual[key] !== null && typeof actual[key] === 'object' && !Array.isArray(actual[key])
+      ) {
+        if (!this.validateOutput(actual[key], expectedValue)) return false;
+      } else if (!this.deepEqual(actual[key], expectedValue)) {
+        return false;
+      }
     }
-    
+
     return true;
   }
 
@@ -374,15 +391,28 @@ class CovenantTestRunner {
         // If execution success matches expectation, now check output validity
         let outputValid = true;
         let outputError = null;
-        if (passed && this.expect) {
+        if (passed && fixture.expect) {
           try {
-            outputValid = this.validateOutput(output, this.expect);
+            outputValid = this.validateOutput(output, fixture.expect);
             if (!outputValid) {
               outputError = `Output does not match expected value`;
             }
           } catch (e) {
             outputValid = false;
             outputError = `Error validating output: ${e.message}`;
+          }
+        }
+
+        // strict_output: actual output must not contain fields that are
+        // absent from contracts.outputs. Opt-in per fixture; default
+        // behaviour (partial matching) is unchanged.
+        if (passed && outputValid && fixture.strict_output && this.contractsOutputs &&
+            output && typeof output === 'object' && !Array.isArray(output)) {
+          const declared = Object.keys(this.contractsOutputs);
+          const undeclared = Object.keys(output).filter(k => !declared.includes(k));
+          if (undeclared.length > 0) {
+            outputValid = false;
+            outputError = `undeclared output fields: ${undeclared.join(', ')}`;
           }
         }
         
@@ -422,7 +452,7 @@ class CovenantTestRunner {
              output,
              attempts,
              duration: Date.now() - startTime,
-             error: `Output validation failed: expected=${JSON.stringify(this.expect)}, actual=${JSON.stringify(output)}`
+             error: outputError || `Output validation failed: expected=${JSON.stringify(fixture.expect)}, actual=${JSON.stringify(output)}`
            };
          }
          // If not passed but we have retries left, continue loop

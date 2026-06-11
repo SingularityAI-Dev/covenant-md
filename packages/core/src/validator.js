@@ -68,7 +68,11 @@ function validateCovenant(filePath) {
     // Validate fixture operations and inputs
     validateFixtures(covenantData, result);
     console.log('Fixtures validation complete');
-    
+
+    // Validate quality gates
+    validateQualityGates(covenantData, result);
+    console.log('Quality gates validation complete');
+
     // Check for dependency cycles (if covenant paths are provided)
     validateDependencyCycles(covenantData, path.dirname(filePath), result);
     console.log('Dependency cycles check complete');
@@ -249,7 +253,14 @@ function validateFixtures(data, result) {
   // Get valid input field names
   const validInputs = data.contracts && data.contracts.inputs ?
     Object.keys(data.contracts.inputs) : [];
-  
+
+  // Get valid output field names
+  const validOutputs = data.contracts && data.contracts.outputs ?
+    Object.keys(data.contracts.outputs) : [];
+
+  // Comparison operators allowed at any level of an expect block
+  const expectOperators = ['>', '>=', '<', '<='];
+
   fixtures.forEach((fixture, index) => {
     if (!fixture || typeof fixture !== 'object') {
       result.errors.push(`quality.fixtures[${index}] must be an object`);
@@ -274,16 +285,163 @@ function validateFixtures(data, result) {
         }
       });
     }
-    
-    // Validate depends_on references
+
+    // Validate fixture expect conformance against contracts.outputs
+    // Mirrors the input cross-check above: an expect block may only
+    // reference declared output fields (comparison operators excepted).
+    if (fixture.expect && typeof fixture.expect === 'object' && !Array.isArray(fixture.expect)) {
+      Object.keys(fixture.expect).forEach(field => {
+        if (expectOperators.includes(field)) return;
+        if (!validOutputs.includes(field)) {
+          result.errors.push(`quality.fixtures[${index}].expect references unknown output field: ${field}`);
+        }
+      });
+    }
+
+
+    // Validate strict_output is a boolean if present
+    if (fixture.strict_output !== undefined && typeof fixture.strict_output !== 'boolean') {
+      result.errors.push(`quality.fixtures[${index}].strict_output must be a boolean`);
+    }
+
+    // Validate retry is a non-negative integer if present
+    if (fixture.retry !== undefined) {
+      if (typeof fixture.retry !== 'number' || !Number.isInteger(fixture.retry) || fixture.retry < 0) {
+        result.errors.push(`quality.fixtures[${index}].retry must be a non-negative integer`);
+      }
+    }
+
+    // Validate depends_on references (string or array of strings)
     if (fixture.depends_on) {
       const dependencyIds = fixtures
         .filter(f => f && f.id)
         .map(f => f.id);
-      
-      if (!dependencyIds.includes(fixture.depends_on)) {
-        result.errors.push(`quality.fixtures[${index}].depends_on references non-existent fixture id: ${fixture.depends_on}`);
+
+      const deps = Array.isArray(fixture.depends_on) ? fixture.depends_on : [fixture.depends_on];
+      deps.forEach(dep => {
+        if (!dependencyIds.includes(dep)) {
+          result.errors.push(`quality.fixtures[${index}].depends_on references non-existent fixture id: ${dep}`);
+        }
+      });
+    }
+  });
+
+  // Validate the depends_on graph is acyclic. The test runner also detects
+  // cycles at execution time, but consumers that validate without executing
+  // (IDE plugins, CI lint-only mode, the MCP covenant_validate tool) need
+  // the validator to catch it too.
+  const cyclePath = findFixtureCycle(fixtures);
+  if (cyclePath) {
+    result.errors.push(`quality.fixtures depends_on graph contains a cycle: ${cyclePath.join(' -> ')}`);
+  }
+}
+
+/**
+ * Detects a cycle in the fixture depends_on graph.
+ * @param {Array} fixtures - quality.fixtures array
+ * @returns {Array|null} The cycle path as fixture ids, or null when acyclic
+ */
+function findFixtureCycle(fixtures) {
+  const byId = new Map();
+  fixtures.forEach(f => {
+    if (f && typeof f === 'object' && f.id) {
+      byId.set(f.id, f);
+    }
+  });
+
+  const visited = new Set();
+  const stack = [];
+  const inStack = new Set();
+
+  function visit(id) {
+    if (inStack.has(id)) {
+      return stack.slice(stack.indexOf(id)).concat(id);
+    }
+    if (visited.has(id)) return null;
+    visited.add(id);
+    stack.push(id);
+    inStack.add(id);
+
+    const node = byId.get(id);
+    const deps = node && node.depends_on ?
+      (Array.isArray(node.depends_on) ? node.depends_on : [node.depends_on]) : [];
+    for (const dep of deps) {
+      if (byId.has(dep)) {
+        const cycle = visit(dep);
+        if (cycle) return cycle;
       }
+    }
+
+    stack.pop();
+    inStack.delete(id);
+    return null;
+  }
+
+  for (const id of byId.keys()) {
+    const cycle = visit(id);
+    if (cycle) return cycle;
+  }
+  return null;
+}
+
+/**
+ * Validates quality gates per spec: gates is an array of objects with a
+ * required id and check, an optional action (retry | fail), an optional
+ * non-negative integer max_retries, and an optional on_exhaustion string.
+ * A gate that names an operation must reference one declared in
+ * interface.surface, same cross-section rule as fixture.operation.
+ * @param {Object} data - Parsed COVENANT data
+ * @param {Object} result - Validation result object
+ */
+function validateQualityGates(data, result) {
+  if (!data.quality || data.quality.gates === undefined) {
+    return; // Optional field
+  }
+
+  const gates = data.quality.gates;
+  if (!Array.isArray(gates)) {
+    result.errors.push('Field "quality.gates" must be an array');
+    return;
+  }
+
+  const validOperations = data.interface && data.interface.surface && Array.isArray(data.interface.surface) ?
+    data.interface.surface.map(op => op && op.name).filter(Boolean) : [];
+  const validActions = ['retry', 'fail'];
+
+  gates.forEach((gate, index) => {
+    if (!gate || typeof gate !== 'object' || Array.isArray(gate)) {
+      result.errors.push(`quality.gates[${index}] must be an object`);
+      return;
+    }
+
+    if (!gate.id || typeof gate.id !== 'string' || gate.id.trim() === '') {
+      result.errors.push(`quality.gates[${index}] missing required field: id`);
+    }
+
+    if (!gate.check || typeof gate.check !== 'string' || gate.check.trim() === '') {
+      result.errors.push(`quality.gates[${index}] missing required field: check`);
+    }
+
+    if (gate.action !== undefined && !validActions.includes(gate.action)) {
+      result.errors.push(`quality.gates[${index}].action must be one of: ${validActions.join(', ')}`);
+    }
+
+    if (gate.max_retries !== undefined) {
+      if (typeof gate.max_retries !== 'number' || !Number.isInteger(gate.max_retries) || gate.max_retries < 0) {
+        result.errors.push(`quality.gates[${index}].max_retries must be a non-negative integer`);
+      }
+    }
+
+    if (gate.on_exhaustion !== undefined && typeof gate.on_exhaustion !== 'string') {
+      result.errors.push(`quality.gates[${index}].on_exhaustion must be a string`);
+    }
+
+    if (gate.description !== undefined && typeof gate.description !== 'string') {
+      result.errors.push(`quality.gates[${index}].description must be a string`);
+    }
+
+    if (gate.operation !== undefined && !validOperations.includes(gate.operation)) {
+      result.errors.push(`quality.gates[${index}].operation references unknown operation: ${gate.operation}`);
     }
   });
 }

@@ -244,8 +244,14 @@ function makeProcessRunner(parsed, covenantPath, spawnFn) {
             const parsedOut = JSON.parse(trimmed);
             resolve(parsedOut);
             return;
-          } catch (_e) {
-            // fall through to error path
+          } catch (parseErr) {
+            // Name the real failure mode: the subprocess ran but its stdout
+            // was not valid JSON. The slice guards against runaway dumps.
+            resolve({
+              success: false,
+              error: `process runner stdout was not valid JSON: ${parseErr.message}; raw (first 200 chars): ${trimmed.slice(0, 200)}`
+            });
+            return;
           }
         }
         resolve({

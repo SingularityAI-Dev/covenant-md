@@ -161,7 +161,6 @@ quality:
           title: "Test Document"
         output_path: "/tmp/covenant-test.docx"
       expect:
-        file_path: "/tmp/covenant-test.docx"
         validation_result:
           valid: true
       tags: [happy-path, minimal]
@@ -181,7 +180,6 @@ quality:
               body: "This is the conclusion body."
         output_path: "/tmp/covenant-full.docx"
       expect:
-        file_path: "/tmp/covenant-full.docx"
         validation_result:
           valid: true
       tags: [happy-path, full]
