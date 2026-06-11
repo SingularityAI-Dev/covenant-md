@@ -141,3 +141,43 @@ describe('retry extraction (issue #21)', () => {
     expect(fixtures.find(f => f.name === 'absent').retry).toBe(0);
   });
 });
+
+describe('strict_output (issue #20)', () => {
+  const strictCovenant = fixture('strict-output-skill.md');
+
+  it('fails a strict_output fixture when output carries undeclared fields', async () => {
+    const skillRunner = jest.fn().mockResolvedValue({
+      success: true,
+      output: { result: 'ok', leaked_api_key: 'sk-x', side_effect_count: 17 }
+    });
+    const runner = new CovenantTestRunner({ covenantPath: strictCovenant, skillRunner });
+    const summary = await runner.run();
+    const strict = summary.fixtures.find(f => f.name === 'strict-fixture');
+    const loose = summary.fixtures.find(f => f.name === 'loose-fixture');
+    expect(strict.passed).toBe(false);
+    expect(strict.error).toMatch(/undeclared output fields: leaked_api_key, side_effect_count/);
+    // Default behaviour is unchanged: partial matching still passes.
+    expect(loose.passed).toBe(true);
+  });
+
+  it('passes a strict_output fixture when output only carries declared fields', async () => {
+    const skillRunner = jest.fn().mockResolvedValue({
+      success: true,
+      output: { result: 'ok' }
+    });
+    const runner = new CovenantTestRunner({ covenantPath: strictCovenant, skillRunner });
+    const summary = await runner.run();
+    expect(summary.overall).toBe(true);
+  });
+
+  it('enforces fixture.expect against actual output (latent this.expect fix)', async () => {
+    const skillRunner = jest.fn().mockResolvedValue({
+      success: true,
+      output: { result: 'wrong-value' }
+    });
+    const runner = new CovenantTestRunner({ covenantPath: strictCovenant, skillRunner });
+    const summary = await runner.run();
+    const loose = summary.fixtures.find(f => f.name === 'loose-fixture');
+    expect(loose.passed).toBe(false);
+  });
+});

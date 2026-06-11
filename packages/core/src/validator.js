@@ -299,6 +299,11 @@ function validateFixtures(data, result) {
     }
 
 
+    // Validate strict_output is a boolean if present
+    if (fixture.strict_output !== undefined && typeof fixture.strict_output !== 'boolean') {
+      result.errors.push(`quality.fixtures[${index}].strict_output must be a boolean`);
+    }
+
     // Validate retry is a non-negative integer if present
     if (fixture.retry !== undefined) {
       if (typeof fixture.retry !== 'number' || !Number.isInteger(fixture.retry) || fixture.retry < 0) {

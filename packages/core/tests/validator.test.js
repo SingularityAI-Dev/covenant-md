@@ -92,6 +92,14 @@ describe('fixture retry type-check (issue #21)', () => {
   });
 });
 
+describe('strict_output type-check (issue #20)', () => {
+  it('rejects non-boolean strict_output', () => {
+    const result = validateCovenant(fixture('invalid-strict-output-type.md'));
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => /strict_output must be a boolean/.test(e))).toBe(true);
+  });
+});
+
 describe('quality.gates validation (issue #19)', () => {
   it('accepts spec-conformant gates', () => {
     const result = validateCovenant(fixture('valid-gates.md'));
