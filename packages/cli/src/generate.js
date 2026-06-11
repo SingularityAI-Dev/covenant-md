@@ -215,7 +215,13 @@ class SkillGenerator {
    * @param {string} dirPath - Path to directory
    */
   async ensureDirectoryExists(dirPath) {
-    if (!(await fs.stat(dirPath).catch(() => false))) {
+    // Only ENOENT means "does not exist". Permission and I/O errors must
+    // propagate, otherwise the mkdir below masks the real root cause.
+    const exists = await fs.stat(dirPath).then(() => true).catch(err => {
+      if (err.code === 'ENOENT') return false;
+      throw err;
+    });
+    if (!exists) {
       await fs.mkdir(dirPath, { recursive: true });
     }
   }
@@ -227,8 +233,12 @@ class SkillGenerator {
   async generateSkill(data) {
     const skillDir = path.join(this.outputDir, data.skillName);
     
-    // Check if directory already exists
-    const dirExists = await fs.stat(skillDir).then(() => true).catch(() => false);
+    // Check if directory already exists. Narrowed to ENOENT so permission
+    // and I/O errors surface instead of being treated as nonexistence.
+    const dirExists = await fs.stat(skillDir).then(() => true).catch(err => {
+      if (err.code === 'ENOENT') return false;
+      throw err;
+    });
     if (dirExists) {
        const overwrite = await prompt([
         {

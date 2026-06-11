@@ -47,3 +47,34 @@ describe('SkillGenerator (programmatic)', () => {
     expect(requiredFieldErrors).toEqual([]);
   });
 });
+
+describe('ensureDirectoryExists error handling (issue #23)', () => {
+  it('propagates non-ENOENT stat errors instead of treating them as nonexistence', async () => {
+    const generator = new SkillGenerator();
+    const eacces = Object.assign(new Error('permission denied'), { code: 'EACCES' });
+    const statSpy = jest.spyOn(fs.promises, 'stat').mockRejectedValue(eacces);
+    const mkdirSpy = jest.spyOn(fs.promises, 'mkdir').mockResolvedValue(undefined);
+    try {
+      await expect(generator.ensureDirectoryExists('/locked/dir')).rejects.toThrow(/permission denied/);
+      // The masking behaviour was: swallow EACCES, then call mkdir anyway.
+      expect(mkdirSpy).not.toHaveBeenCalled();
+    } finally {
+      statSpy.mockRestore();
+      mkdirSpy.mockRestore();
+    }
+  });
+
+  it('still creates the directory on a genuine ENOENT', async () => {
+    const generator = new SkillGenerator();
+    const enoent = Object.assign(new Error('no such file'), { code: 'ENOENT' });
+    const statSpy = jest.spyOn(fs.promises, 'stat').mockRejectedValue(enoent);
+    const mkdirSpy = jest.spyOn(fs.promises, 'mkdir').mockResolvedValue(undefined);
+    try {
+      await generator.ensureDirectoryExists('/brand/new/dir');
+      expect(mkdirSpy).toHaveBeenCalledWith('/brand/new/dir', { recursive: true });
+    } finally {
+      statSpy.mockRestore();
+      mkdirSpy.mockRestore();
+    }
+  });
+});
