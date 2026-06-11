@@ -92,6 +92,26 @@ describe('fixture retry type-check (issue #21)', () => {
   });
 });
 
+describe('quality.gates validation (issue #19)', () => {
+  it('accepts spec-conformant gates', () => {
+    const result = validateCovenant(fixture('valid-gates.md'));
+    expect(result.valid).toBe(true);
+    expect(result.errors).toEqual([]);
+  });
+
+  it('rejects each malformed gate with a targeted error', () => {
+    const result = validateCovenant(fixture('invalid-gates.md'));
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => /quality\.gates\[0\] missing required field: id/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[1\] missing required field: check/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[2\]\.action must be one of: retry, fail/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[3\]\.max_retries must be a non-negative integer/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[4\]\.on_exhaustion must be a string/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[5\]\.operation references unknown operation: not-a-real-op/.test(e))).toBe(true);
+    expect(result.errors.some(e => /quality\.gates\[6\] must be an object/.test(e))).toBe(true);
+  });
+});
+
 describe('fixture depends_on cycle detection (issue #24)', () => {
   it('rejects a cyclic fixture depends_on graph at validation time', () => {
     const result = validateCovenant(fixture('cyclic-fixture-deps.md'));

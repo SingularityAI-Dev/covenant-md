@@ -68,7 +68,11 @@ function validateCovenant(filePath) {
     // Validate fixture operations and inputs
     validateFixtures(covenantData, result);
     console.log('Fixtures validation complete');
-    
+
+    // Validate quality gates
+    validateQualityGates(covenantData, result);
+    console.log('Quality gates validation complete');
+
     // Check for dependency cycles (if covenant paths are provided)
     validateDependencyCycles(covenantData, path.dirname(filePath), result);
     console.log('Dependency cycles check complete');
@@ -373,6 +377,68 @@ function findFixtureCycle(fixtures) {
     if (cycle) return cycle;
   }
   return null;
+}
+
+/**
+ * Validates quality gates per spec: gates is an array of objects with a
+ * required id and check, an optional action (retry | fail), an optional
+ * non-negative integer max_retries, and an optional on_exhaustion string.
+ * A gate that names an operation must reference one declared in
+ * interface.surface, same cross-section rule as fixture.operation.
+ * @param {Object} data - Parsed COVENANT data
+ * @param {Object} result - Validation result object
+ */
+function validateQualityGates(data, result) {
+  if (!data.quality || data.quality.gates === undefined) {
+    return; // Optional field
+  }
+
+  const gates = data.quality.gates;
+  if (!Array.isArray(gates)) {
+    result.errors.push('Field "quality.gates" must be an array');
+    return;
+  }
+
+  const validOperations = data.interface && data.interface.surface && Array.isArray(data.interface.surface) ?
+    data.interface.surface.map(op => op && op.name).filter(Boolean) : [];
+  const validActions = ['retry', 'fail'];
+
+  gates.forEach((gate, index) => {
+    if (!gate || typeof gate !== 'object' || Array.isArray(gate)) {
+      result.errors.push(`quality.gates[${index}] must be an object`);
+      return;
+    }
+
+    if (!gate.id || typeof gate.id !== 'string' || gate.id.trim() === '') {
+      result.errors.push(`quality.gates[${index}] missing required field: id`);
+    }
+
+    if (!gate.check || typeof gate.check !== 'string' || gate.check.trim() === '') {
+      result.errors.push(`quality.gates[${index}] missing required field: check`);
+    }
+
+    if (gate.action !== undefined && !validActions.includes(gate.action)) {
+      result.errors.push(`quality.gates[${index}].action must be one of: ${validActions.join(', ')}`);
+    }
+
+    if (gate.max_retries !== undefined) {
+      if (typeof gate.max_retries !== 'number' || !Number.isInteger(gate.max_retries) || gate.max_retries < 0) {
+        result.errors.push(`quality.gates[${index}].max_retries must be a non-negative integer`);
+      }
+    }
+
+    if (gate.on_exhaustion !== undefined && typeof gate.on_exhaustion !== 'string') {
+      result.errors.push(`quality.gates[${index}].on_exhaustion must be a string`);
+    }
+
+    if (gate.description !== undefined && typeof gate.description !== 'string') {
+      result.errors.push(`quality.gates[${index}].description must be a string`);
+    }
+
+    if (gate.operation !== undefined && !validOperations.includes(gate.operation)) {
+      result.errors.push(`quality.gates[${index}].operation references unknown operation: ${gate.operation}`);
+    }
+  });
 }
 
 /**
