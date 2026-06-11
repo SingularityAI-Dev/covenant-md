@@ -88,7 +88,7 @@ class CovenantTestRunner {
           input: fixture.input || {},
           depends_on: Array.isArray(fixture.depends_on) ? fixture.depends_on : 
                      typeof fixture.depends_on === 'string' ? [fixture.depends_on] : [],
-          retry: fixture.retry || 0,
+          retry: fixture.retry ?? 0,
           expected_outcome: fixture.expect_failure ? 'fail' : 'pass',
           description: fixture.description,
           expect: fixture.expect,
@@ -126,7 +126,7 @@ class CovenantTestRunner {
         }
         // Set defaults
         fixture.depends_on = fixture.depends_on || [];
-        fixture.retry = fixture.retry || 0;
+        fixture.retry = fixture.retry ?? 0;
         fixture.expected_outcome = fixture.expected_outcome || 'pass';
         fixtures.push(fixture);
       } catch (parseError) {

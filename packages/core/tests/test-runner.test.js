@@ -115,3 +115,29 @@ describe('executeFixture', () => {
     expect(skillRunner).toHaveBeenCalledTimes(3);
   });
 });
+
+describe('retry extraction (issue #21)', () => {
+  it('preserves an explicit retry: 0 and defaults absent retry to 0', () => {
+    const runner = new CovenantTestRunner({
+      covenantPath: '/tmp/dummy',
+      skillRunner: jest.fn()
+    });
+    const content = [
+      '---',
+      'covenant_version: "1.0"',
+      'name: retry-extract-skill',
+      'quality:',
+      '  fixtures:',
+      '    - id: explicit-zero',
+      '      operation: op',
+      '      retry: 0',
+      '    - id: absent',
+      '      operation: op',
+      '---',
+      'body'
+    ].join('\n');
+    const fixtures = runner.extractFixtures(content);
+    expect(fixtures.find(f => f.name === 'explicit-zero').retry).toBe(0);
+    expect(fixtures.find(f => f.name === 'absent').retry).toBe(0);
+  });
+});

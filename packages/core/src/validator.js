@@ -295,6 +295,13 @@ function validateFixtures(data, result) {
     }
 
 
+    // Validate retry is a non-negative integer if present
+    if (fixture.retry !== undefined) {
+      if (typeof fixture.retry !== 'number' || !Number.isInteger(fixture.retry) || fixture.retry < 0) {
+        result.errors.push(`quality.fixtures[${index}].retry must be a non-negative integer`);
+      }
+    }
+
     // Validate depends_on references
     if (fixture.depends_on) {
       const dependencyIds = fixtures

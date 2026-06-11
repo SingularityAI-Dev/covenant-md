@@ -82,3 +82,12 @@ describe('fixture expect cross-refs (issue #18)', () => {
     expect(result.errors).toEqual([]);
   });
 });
+
+describe('fixture retry type-check (issue #21)', () => {
+  it('rejects string, float and negative retry values', () => {
+    const result = validateCovenant(fixture('invalid-retry-type.md'));
+    expect(result.valid).toBe(false);
+    const retryErrors = result.errors.filter(e => /retry must be a non-negative integer/.test(e));
+    expect(retryErrors.length).toBe(3);
+  });
+});
