@@ -221,8 +221,9 @@ class CovenantTestRunner {
           const dependencies = fixture.depends_on || [];
           for (const dep of dependencies) {
             if (!nameToFixture.has(dep)) {
-              // Ignore dependencies that are not in the fixture list
-              continue;
+              // Fail loudly, same posture as the cycle-detected throw below.
+              // A typo in depends_on must not silently become "no dependency".
+              throw new Error(`fixture "${nodeName}" depends on unknown fixture "${dep}": depends_on must reference a fixture by name`);
             }
             if (!visited.has(dep)) {
               if (hasCycle(dep)) {

@@ -142,6 +142,20 @@ describe('retry extraction (issue #21)', () => {
   });
 });
 
+describe('unknown depends_on (issue #25)', () => {
+  it('throws when a fixture depends on a name not in the fixture list', () => {
+    const runner = new CovenantTestRunner({
+      covenantPath: '/tmp/dummy',
+      skillRunner: jest.fn()
+    });
+    const fixtures = [
+      { name: 'a', depends_on: [], operation: 'x' },
+      { name: 'b', depends_on: ['no-such-fixture'], operation: 'x' },
+    ];
+    expect(() => runner.topologicalSort(fixtures)).toThrow(/depends on unknown fixture "no-such-fixture"/);
+  });
+});
+
 describe('strict_output (issue #20)', () => {
   const strictCovenant = fixture('strict-output-skill.md');
 
