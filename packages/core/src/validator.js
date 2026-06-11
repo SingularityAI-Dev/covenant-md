@@ -302,17 +302,77 @@ function validateFixtures(data, result) {
       }
     }
 
-    // Validate depends_on references
+    // Validate depends_on references (string or array of strings)
     if (fixture.depends_on) {
       const dependencyIds = fixtures
         .filter(f => f && f.id)
         .map(f => f.id);
-      
-      if (!dependencyIds.includes(fixture.depends_on)) {
-        result.errors.push(`quality.fixtures[${index}].depends_on references non-existent fixture id: ${fixture.depends_on}`);
-      }
+
+      const deps = Array.isArray(fixture.depends_on) ? fixture.depends_on : [fixture.depends_on];
+      deps.forEach(dep => {
+        if (!dependencyIds.includes(dep)) {
+          result.errors.push(`quality.fixtures[${index}].depends_on references non-existent fixture id: ${dep}`);
+        }
+      });
     }
   });
+
+  // Validate the depends_on graph is acyclic. The test runner also detects
+  // cycles at execution time, but consumers that validate without executing
+  // (IDE plugins, CI lint-only mode, the MCP covenant_validate tool) need
+  // the validator to catch it too.
+  const cyclePath = findFixtureCycle(fixtures);
+  if (cyclePath) {
+    result.errors.push(`quality.fixtures depends_on graph contains a cycle: ${cyclePath.join(' -> ')}`);
+  }
+}
+
+/**
+ * Detects a cycle in the fixture depends_on graph.
+ * @param {Array} fixtures - quality.fixtures array
+ * @returns {Array|null} The cycle path as fixture ids, or null when acyclic
+ */
+function findFixtureCycle(fixtures) {
+  const byId = new Map();
+  fixtures.forEach(f => {
+    if (f && typeof f === 'object' && f.id) {
+      byId.set(f.id, f);
+    }
+  });
+
+  const visited = new Set();
+  const stack = [];
+  const inStack = new Set();
+
+  function visit(id) {
+    if (inStack.has(id)) {
+      return stack.slice(stack.indexOf(id)).concat(id);
+    }
+    if (visited.has(id)) return null;
+    visited.add(id);
+    stack.push(id);
+    inStack.add(id);
+
+    const node = byId.get(id);
+    const deps = node && node.depends_on ?
+      (Array.isArray(node.depends_on) ? node.depends_on : [node.depends_on]) : [];
+    for (const dep of deps) {
+      if (byId.has(dep)) {
+        const cycle = visit(dep);
+        if (cycle) return cycle;
+      }
+    }
+
+    stack.pop();
+    inStack.delete(id);
+    return null;
+  }
+
+  for (const id of byId.keys()) {
+    const cycle = visit(id);
+    if (cycle) return cycle;
+  }
+  return null;
 }
 
 /**

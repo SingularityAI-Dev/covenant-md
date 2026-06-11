@@ -91,3 +91,16 @@ describe('fixture retry type-check (issue #21)', () => {
     expect(retryErrors.length).toBe(3);
   });
 });
+
+describe('fixture depends_on cycle detection (issue #24)', () => {
+  it('rejects a cyclic fixture depends_on graph at validation time', () => {
+    const result = validateCovenant(fixture('cyclic-fixture-deps.md'));
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => /depends_on graph contains a cycle/.test(e))).toBe(true);
+  });
+
+  it('still accepts an acyclic depends_on chain', () => {
+    const result = validateCovenant(fixture('depends-on-chain.md'));
+    expect(result.errors.filter(e => /cycle/.test(e))).toEqual([]);
+  });
+});
