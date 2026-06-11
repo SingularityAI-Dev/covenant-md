@@ -168,4 +168,29 @@ describe('createSkillRunner factory: strategy selection', () => {
     expect(result.success).toBe(false);
     expect(result.error).toMatch(/process runner failed/);
   });
+
+  it('process strategy names the JSON parse failure when stdout is not valid JSON (issue #22)', async () => {
+    const fakeSpawn = () => {
+      const child = new EventEmitter();
+      child.stdin = { write: jest.fn(), end: jest.fn() };
+      child.stdout = new EventEmitter();
+      child.stderr = new EventEmitter();
+      setImmediate(() => {
+        child.stdout.emit('data', Buffer.from('starting...\n{"success":true}'));
+        child.emit('close', 0);
+      });
+      return child;
+    };
+    const runner = await createSkillRunner({
+      covenantPath: processFixture,
+      _spawn: fakeSpawn
+    });
+    const result = await runner('process-test-skill', 'ping', {});
+    expect(result.success).toBe(false);
+    expect(result.error).toMatch(/stdout was not valid JSON/);
+    // The raw stdout sample must be included to point the author at the cause.
+    expect(result.error).toMatch(/starting\.\.\./);
+    // The misleading generic message must be gone for this failure mode.
+    expect(result.error).not.toMatch(/exit 0/);
+  });
 });
