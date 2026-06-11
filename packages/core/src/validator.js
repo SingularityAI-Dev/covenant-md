@@ -249,7 +249,14 @@ function validateFixtures(data, result) {
   // Get valid input field names
   const validInputs = data.contracts && data.contracts.inputs ?
     Object.keys(data.contracts.inputs) : [];
-  
+
+  // Get valid output field names
+  const validOutputs = data.contracts && data.contracts.outputs ?
+    Object.keys(data.contracts.outputs) : [];
+
+  // Comparison operators allowed at any level of an expect block
+  const expectOperators = ['>', '>=', '<', '<='];
+
   fixtures.forEach((fixture, index) => {
     if (!fixture || typeof fixture !== 'object') {
       result.errors.push(`quality.fixtures[${index}] must be an object`);
@@ -274,7 +281,20 @@ function validateFixtures(data, result) {
         }
       });
     }
-    
+
+    // Validate fixture expect conformance against contracts.outputs
+    // Mirrors the input cross-check above: an expect block may only
+    // reference declared output fields (comparison operators excepted).
+    if (fixture.expect && typeof fixture.expect === 'object' && !Array.isArray(fixture.expect)) {
+      Object.keys(fixture.expect).forEach(field => {
+        if (expectOperators.includes(field)) return;
+        if (!validOutputs.includes(field)) {
+          result.errors.push(`quality.fixtures[${index}].expect references unknown output field: ${field}`);
+        }
+      });
+    }
+
+
     // Validate depends_on references
     if (fixture.depends_on) {
       const dependencyIds = fixtures

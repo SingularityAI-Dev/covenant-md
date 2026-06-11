@@ -68,3 +68,17 @@ describe('dependency cycle detection', () => {
     expect(result.errors.some(e => /skill depends on itself/.test(e))).toBe(true);
   });
 });
+
+describe('fixture expect cross-refs (issue #18)', () => {
+  it('rejects expect referencing unknown output field', () => {
+    const result = validateCovenant(fixture('invalid-expect-cross-ref.md'));
+    expect(result.valid).toBe(false);
+    expect(result.errors.some(e => /expect references unknown output field: resultId/.test(e))).toBe(true);
+  });
+
+  it('accepts expect referencing declared output fields', () => {
+    const result = validateCovenant(fixture('strict-output-skill.md'));
+    expect(result.valid).toBe(true);
+    expect(result.errors).toEqual([]);
+  });
+});
