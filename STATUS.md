@@ -1,6 +1,6 @@
 # Status
 
-> Updated: 2026-05-25
+Updated: 2026-06-09
 
 ## Where we are
 
