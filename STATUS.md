@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-06-09
+Updated: 2026-07-03 (reviewed against git history; no material changes since 2026-05-28)
 
 ## Where we are
 
